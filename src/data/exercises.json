@@ -1,0 +1,158 @@
+{
+  "exercises": [
+    {
+      "id": "1",
+      "name": "Supino Reto",
+      "muscle": "peito",
+      "difficulty": "iniciante",
+      "description": "Exercício básico para peito realizado no banco reto"
+    },
+    {
+      "id": "2",
+      "name": "Supino Inclinado",
+      "muscle": "peito",
+      "difficulty": "intermediario",
+      "description": "Supino realizado com o banco inclinado para trabalhar a parte superior do peito"
+    },
+    {
+      "id": "3",
+      "name": "Crucifixo",
+      "muscle": "peito",
+      "difficulty": "iniciante",
+      "description": "Exercício de isolamento para peito realizado com halteres"
+    },
+    {
+      "id": "4",
+      "name": "Puxada Frontal",
+      "muscle": "costas",
+      "difficulty": "iniciante",
+      "description": "Exercício básico para costas realizado na polia alta"
+    },
+    {
+      "id": "5",
+      "name": "Remada Baixa",
+      "muscle": "costas",
+      "difficulty": "iniciante",
+      "description": "Exercício para costas realizado na polia baixa"
+    },
+    {
+      "id": "6",
+      "name": "Rosca Direta",
+      "muscle": "biceps",
+      "difficulty": "iniciante",
+      "description": "Exercício básico para bíceps com barra"
+    },
+    {
+      "id": "7",
+      "name": "Rosca Alternada",
+      "muscle": "biceps",
+      "difficulty": "iniciante",
+      "description": "Exercício para bíceps realizado com halteres alternadamente"
+    },
+    {
+      "id": "8",
+      "name": "Tríceps Pulley",
+      "muscle": "triceps",
+      "difficulty": "iniciante",
+      "description": "Exercício básico para tríceps na polia alta"
+    },
+    {
+      "id": "9",
+      "name": "Tríceps Francês",
+      "muscle": "triceps",
+      "difficulty": "intermediario",
+      "description": "Exercício para tríceps realizado com barra ou halteres"
+    },
+    {
+      "id": "10",
+      "name": "Agachamento",
+      "muscle": "perna",
+      "difficulty": "intermediario",
+      "description": "Exercício composto para pernas realizado com barra"
+    },
+    {
+      "id": "11",
+      "name": "Leg Press",
+      "muscle": "perna",
+      "difficulty": "iniciante",
+      "description": "Exercício para pernas realizado na máquina"
+    },
+    {
+      "id": "12",
+      "name": "Extensão de Pernas",
+      "muscle": "perna",
+      "difficulty": "iniciante",
+      "description": "Exercício de isolamento para quadríceps"
+    },
+    {
+      "id": "13",
+      "name": "Flexão de Pernas",
+      "muscle": "perna",
+      "difficulty": "iniciante",
+      "description": "Exercício de isolamento para posterior de coxa"
+    },
+    {
+      "id": "14",
+      "name": "Elevação Lateral",
+      "muscle": "ombro",
+      "difficulty": "iniciante",
+      "description": "Exercício para deltoides laterais com halteres"
+    },
+    {
+      "id": "15",
+      "name": "Desenvolvimento",
+      "muscle": "ombro",
+      "difficulty": "intermediario",
+      "description": "Exercício composto para ombros com barra ou halteres"
+    },
+    {
+      "id": "16",
+      "name": "Elevação Frontal",
+      "muscle": "ombro",
+      "difficulty": "iniciante",
+      "description": "Exercício para deltoides frontais"
+    },
+    {
+      "id": "17",
+      "name": "Prancha",
+      "muscle": "abdomen",
+      "difficulty": "iniciante",
+      "description": "Exercício isométrico para core"
+    },
+    {
+      "id": "18",
+      "name": "Abdominal Crunch",
+      "muscle": "abdomen",
+      "difficulty": "iniciante",
+      "description": "Exercício básico para abdômen"
+    },
+    {
+      "id": "19",
+      "name": "Puxada na Frente",
+      "muscle": "costas",
+      "difficulty": "intermediario",
+      "description": "Exercício avançado para costas na barra fixa"
+    },
+    {
+      "id": "20",
+      "name": "Barra Fixa",
+      "muscle": "costas",
+      "difficulty": "avancado",
+      "description": "Exercício desafiador para costas e bíceps"
+    }
+  ],
+  "muscles": [
+    "peito",
+    "costas",
+    "biceps",
+    "triceps",
+    "perna",
+    "ombro",
+    "abdomen"
+  ],
+  "difficulties": [
+    "iniciante",
+    "intermediario",
+    "avancado"
+  ]
+} 

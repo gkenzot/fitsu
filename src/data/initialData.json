@@ -1,0 +1,511 @@
+{
+  "user": {
+    "id": "1",
+    "name": "Usuário Teste",
+    "email": "user@example.com",
+    "password": "123456",
+    "height": 175,
+    "weight": 75,
+    "age": 30
+  },
+  "workouts": [
+    {
+      "id": "Treino A",
+      "name": "Treino A",
+      "status": "completed",
+      "startDate": "2024-03-01",
+      "endDate": "2024-03-15",
+      "schedule": {
+        "monday": {
+          "exercises": [
+            {
+              "exerciseId": "supino-reto",
+              "sets": 4,
+              "reps": 12,
+              "weight": 60,
+              "notes": "Aumentar peso na próxima semana"
+            },
+            {
+              "exerciseId": "puxada-frente",
+              "sets": 4,
+              "reps": 12,
+              "weight": 50,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "leg-press",
+              "sets": 4,
+              "reps": 15,
+              "weight": 100,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "tuesday": {
+          "exercises": [
+            {
+              "exerciseId": "agachamento",
+              "sets": 4,
+              "reps": 12,
+              "weight": 80,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "extensora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 40,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "flexora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 35,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "wednesday": {
+          "exercises": [
+            {
+              "exerciseId": "desenvolvimento",
+              "sets": 4,
+              "reps": 12,
+              "weight": 40,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "elevacao-lateral",
+              "sets": 3,
+              "reps": 15,
+              "weight": 8,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "triceps-pulley",
+              "sets": 3,
+              "reps": 15,
+              "weight": 25,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "thursday": {
+          "exercises": [
+            {
+              "exerciseId": "remada-baixa",
+              "sets": 4,
+              "reps": 12,
+              "weight": 45,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "puxada-frente",
+              "sets": 4,
+              "reps": 12,
+              "weight": 50,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "biceps-rosca",
+              "sets": 3,
+              "reps": 12,
+              "weight": 20,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "friday": {
+          "exercises": [
+            {
+              "exerciseId": "leg-press",
+              "sets": 4,
+              "reps": 15,
+              "weight": 100,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "extensora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 40,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "flexora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 35,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "saturday": {
+          "exercises": [
+            {
+              "exerciseId": "supino-inclinado",
+              "sets": 4,
+              "reps": 12,
+              "weight": 50,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "crucifixo",
+              "sets": 3,
+              "reps": 15,
+              "weight": 12,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "triceps-frances",
+              "sets": 3,
+              "reps": 15,
+              "weight": 20,
+              "notes": "Bom progresso"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "Treino B",
+      "name": "Treino B",
+      "status": "active",
+      "startDate": "2024-03-16",
+      "schedule": {
+        "monday": {
+          "exercises": [
+            {
+              "exerciseId": "supino-reto",
+              "sets": 4,
+              "reps": 12,
+              "weight": 65,
+              "notes": "Aumentar peso na próxima semana"
+            },
+            {
+              "exerciseId": "puxada-frente",
+              "sets": 4,
+              "reps": 12,
+              "weight": 55,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "leg-press",
+              "sets": 4,
+              "reps": 15,
+              "weight": 110,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "tuesday": {
+          "exercises": [
+            {
+              "exerciseId": "agachamento",
+              "sets": 4,
+              "reps": 12,
+              "weight": 85,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "extensora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 45,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "flexora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 40,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "wednesday": {
+          "exercises": [
+            {
+              "exerciseId": "desenvolvimento",
+              "sets": 4,
+              "reps": 12,
+              "weight": 45,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "elevacao-lateral",
+              "sets": 3,
+              "reps": 15,
+              "weight": 10,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "triceps-pulley",
+              "sets": 3,
+              "reps": 15,
+              "weight": 30,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "thursday": {
+          "exercises": [
+            {
+              "exerciseId": "remada-baixa",
+              "sets": 4,
+              "reps": 12,
+              "weight": 50,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "puxada-frente",
+              "sets": 4,
+              "reps": 12,
+              "weight": 55,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "biceps-rosca",
+              "sets": 3,
+              "reps": 12,
+              "weight": 22,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "friday": {
+          "exercises": [
+            {
+              "exerciseId": "leg-press",
+              "sets": 4,
+              "reps": 15,
+              "weight": 110,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "extensora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 45,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "flexora",
+              "sets": 3,
+              "reps": 15,
+              "weight": 40,
+              "notes": "Bom progresso"
+            }
+          ]
+        },
+        "saturday": {
+          "exercises": [
+            {
+              "exerciseId": "supino-inclinado",
+              "sets": 4,
+              "reps": 12,
+              "weight": 55,
+              "notes": "Aumentar peso"
+            },
+            {
+              "exerciseId": "crucifixo",
+              "sets": 3,
+              "reps": 15,
+              "weight": 14,
+              "notes": "Manter peso"
+            },
+            {
+              "exerciseId": "triceps-frances",
+              "sets": 3,
+              "reps": 15,
+              "weight": 22,
+              "notes": "Bom progresso"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "exercises": [
+    {
+      "id": "supino-reto",
+      "name": "Supino Reto",
+      "muscleGroup": "Peito"
+    },
+    {
+      "id": "supino-inclinado",
+      "name": "Supino Inclinado",
+      "muscleGroup": "Peito"
+    },
+    {
+      "id": "crucifixo",
+      "name": "Crucifixo",
+      "muscleGroup": "Peito"
+    },
+    {
+      "id": "puxada-frente",
+      "name": "Puxada Frontal",
+      "muscleGroup": "Costas"
+    },
+    {
+      "id": "remada-baixa",
+      "name": "Remada Baixa",
+      "muscleGroup": "Costas"
+    },
+    {
+      "id": "desenvolvimento",
+      "name": "Desenvolvimento",
+      "muscleGroup": "Ombro"
+    },
+    {
+      "id": "elevacao-lateral",
+      "name": "Elevação Lateral",
+      "muscleGroup": "Ombro"
+    },
+    {
+      "id": "biceps-rosca",
+      "name": "Rosca Bíceps",
+      "muscleGroup": "Bíceps"
+    },
+    {
+      "id": "triceps-pulley",
+      "name": "Tríceps Pulley",
+      "muscleGroup": "Tríceps"
+    },
+    {
+      "id": "triceps-frances",
+      "name": "Tríceps Francês",
+      "muscleGroup": "Tríceps"
+    },
+    {
+      "id": "agachamento",
+      "name": "Agachamento",
+      "muscleGroup": "Perna"
+    },
+    {
+      "id": "leg-press",
+      "name": "Leg Press",
+      "muscleGroup": "Perna"
+    },
+    {
+      "id": "extensora",
+      "name": "Extensora",
+      "muscleGroup": "Perna"
+    },
+    {
+      "id": "flexora",
+      "name": "Flexora",
+      "muscleGroup": "Perna"
+    }
+  ],
+  "weeklyPlan": {
+    "monday": {
+      "workoutId": "Treino B",
+      "status": "completed",
+      "completedAt": "2024-03-18T10:00:00"
+    },
+    "tuesday": {
+      "workoutId": "Treino B",
+      "status": "missed",
+      "scheduledAt": "2024-03-19T10:00:00"
+    },
+    "wednesday": {
+      "workoutId": "Treino B",
+      "status": "partial",
+      "scheduledAt": "2024-03-20T10:00:00"
+    },
+    "thursday": {
+      "workoutId": "Treino B",
+      "status": "open",
+      "scheduledAt": "2024-03-21T10:00:00"
+    },
+    "friday": {
+      "workoutId": "Treino B",
+      "status": "locked",
+      "scheduledAt": "2024-03-22T10:00:00"
+    },
+    "saturday": {
+      "workoutId": "Treino B",
+      "status": "locked",
+      "scheduledAt": "2024-03-23T10:00:00"
+    },
+    "sunday": {
+      "status": "rest"
+    }
+  },
+  "workoutHistory": {
+    "2024-03-18": {
+      "week": "Semana 1",
+      "dayOfWeek": "Segunda-feira",
+      "workoutId": "Treino B",
+      "status": "completed",
+      "exercises": [
+        {
+          "exerciseId": "supino-reto",
+          "name": "Supino Reto",
+          "sets": 4,
+          "reps": 12,
+          "weight": 65,
+          "status": "completed"
+        },
+        {
+          "exerciseId": "puxada-frente",
+          "name": "Puxada Frontal",
+          "sets": 4,
+          "reps": 12,
+          "weight": 55,
+          "status": "completed"
+        },
+        {
+          "exerciseId": "leg-press",
+          "name": "Leg Press",
+          "sets": 4,
+          "reps": 15,
+          "weight": 110,
+          "status": "completed"
+        }
+      ]
+    },
+    "2024-03-19": {
+      "week": "Semana 1",
+      "dayOfWeek": "Terça-feira",
+      "workoutId": "Treino B",
+      "status": "missed",
+      "reason": "Doente"
+    },
+    "2024-03-20": {
+      "week": "Semana 1",
+      "dayOfWeek": "Quarta-feira",
+      "workoutId": "Treino B",
+      "status": "partial",
+      "exercises": [
+        {
+          "exerciseId": "desenvolvimento",
+          "name": "Desenvolvimento",
+          "sets": 4,
+          "reps": 12,
+          "weight": 45,
+          "status": "completed"
+        },
+        {
+          "exerciseId": "elevacao-lateral",
+          "name": "Elevação Lateral",
+          "sets": 3,
+          "reps": 15,
+          "weight": 10,
+          "status": "completed"
+        },
+        {
+          "exerciseId": "triceps-pulley",
+          "name": "Tríceps Pulley",
+          "sets": 3,
+          "reps": 15,
+          "weight": 30,
+          "status": "incomplete",
+          "notes": "Academia fechou mais cedo"
+        }
+      ]
+    }
+  }
+} 
