@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useStorageContext } from '../contexts/StorageContext';
 import { useAuth } from '../contexts/AuthContext';
 import { Card, Button } from '../components/ui';
+import { format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 const PerfilContainer = styled.div`
   display: flex;
@@ -75,21 +77,28 @@ const WorkoutList = styled.div`
   gap: ${props => props.theme.spacing.md};
 `;
 
-const WorkoutCard = styled(Card)`
+const WorkoutHistoryCard = styled(Card)`
   padding: ${props => props.theme.spacing.md};
+  display: flex;
+  flex-direction: column;
+  gap: ${props => props.theme.spacing.sm};
+`;
+
+const WorkoutHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const WorkoutDate = styled.div`
   color: ${props => props.theme.colors.text.primary};
   font-weight: bold;
-  margin-bottom: ${props => props.theme.spacing.sm};
 `;
 
 const WorkoutStatus = styled.span`
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.9rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
   background-color: ${props => {
     switch (props.status) {
       case 'completed':
@@ -103,19 +112,24 @@ const WorkoutStatus = styled.span`
     }
   }};
   color: white;
-  margin-bottom: ${props => props.theme.spacing.sm};
+`;
+
+const WorkoutInfo = styled.div`
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 0.9rem;
 `;
 
 const ExerciseList = styled.ul`
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: ${props => props.theme.spacing.sm} 0 0 0;
 `;
 
 const ExerciseItem = styled.li`
   display: flex;
   justify-content: space-between;
-  padding: ${props => props.theme.spacing.xs} 0;
+  align-items: center;
+  padding: 0.5rem 0;
   border-bottom: 1px solid ${props => props.theme.colors.border};
   
   &:last-child {
@@ -123,17 +137,71 @@ const ExerciseItem = styled.li`
   }
 `;
 
+const ExerciseStatus = styled.span`
+  color: ${props => {
+    switch (props.status) {
+      case 'completed':
+        return props.theme.colors.success;
+      case 'partial':
+        return props.theme.colors.warning;
+      case 'missed':
+        return props.theme.colors.error;
+      default:
+        return props.theme.colors.text.secondary;
+    }
+  }};
+`;
+
 const getStatusText = (status) => {
   switch (status) {
     case 'completed':
-      return 'Completo';
+      return 'Concluído';
     case 'partial':
       return 'Parcial';
     case 'missed':
-      return 'Perdido';
+      return 'Faltou';
     default:
-      return status;
+      return 'Pendente';
   }
+};
+
+const getDayName = (date) => {
+  const localDate = new Date(date + 'T00:00:00');
+  return format(localDate, 'EEEE', { locale: ptBR });
+};
+
+const getWorkoutInfo = (workoutId, dayId, data) => {
+  if (!data?.workouts) return null;
+  
+  const workout = data.workouts.find(w => w.id === workoutId);
+  if (!workout) return null;
+
+  const day = Object.values(workout.schedule).find(d => d.id === dayId);
+  if (!day) return null;
+
+  return {
+    workoutName: workout.name,
+    dayName: day.name
+  };
+};
+
+const getExerciseInfo = (workoutId, dayId, exerciseId, data) => {
+  if (!data?.workouts) return null;
+  
+  const workout = data.workouts.find(w => w.id === workoutId);
+  if (!workout) return null;
+
+  const day = Object.values(workout.schedule).find(d => d.id === dayId);
+  if (!day) return null;
+
+  const exercise = day.exercises.find(e => e.exerciseId === exerciseId);
+  if (!exercise) return null;
+
+  // Como não temos a lista de exercícios no initialData, vamos usar o ID como nome temporariamente
+  return {
+    ...exercise,
+    name: `Exercício ${exerciseId}`
+  };
 };
 
 const Perfil = () => {
@@ -141,7 +209,7 @@ const Perfil = () => {
   const navigate = useNavigate();
   const { logout } = useAuth();
 
-  if (!data) {
+  if (!data || !data.user || !data.workouts) {
     return <div>Carregando...</div>;
   }
 
@@ -181,28 +249,47 @@ const Perfil = () => {
       <WorkoutHistory>
         <Title>Histórico de Treinos</Title>
         <WorkoutList>
-          {Object.entries(data.workoutHistory)
-            .sort(([dateA], [dateB]) => new Date(dateB) - new Date(dateA))
-            .map(([date, workout]) => (
-              <WorkoutCard key={date}>
-                <WorkoutDate>
-                  {new Date(date).toLocaleDateString('pt-BR')} - {workout.dayOfWeek}
-                </WorkoutDate>
-                <WorkoutStatus status={workout.status}>
-                  {getStatusText(workout.status)}
-                </WorkoutStatus>
-                <ExerciseList>
-                  {workout.exercises?.map((exercise) => (
-                    <ExerciseItem key={exercise.exerciseId}>
-                      <span>{exercise.name}</span>
-                      <span>
-                        {exercise.sets}x{exercise.reps} - {exercise.weight}kg
-                      </span>
-                    </ExerciseItem>
-                  ))}
-                </ExerciseList>
-              </WorkoutCard>
-            ))}
+          {data.workoutHistory && Object.entries(data.workoutHistory).map(([date, workout]) => {
+            const workoutInfo = getWorkoutInfo(workout.workoutId, workout.dayId, data);
+            if (!workoutInfo) return null;
+
+            return (
+              <WorkoutHistoryCard key={date}>
+                <WorkoutHeader>
+                  <WorkoutDate>
+                    {format(new Date(date + 'T00:00:00'), 'dd/MM/yyyy', { locale: ptBR })} - {getDayName(date)}
+                  </WorkoutDate>
+                  <WorkoutStatus status={workout.status}>
+                    {getStatusText(workout.status)}
+                  </WorkoutStatus>
+                </WorkoutHeader>
+                
+                <WorkoutInfo>
+                  {workoutInfo.workoutName} - {workoutInfo.dayName}
+                </WorkoutInfo>
+
+                {workout.status === 'missed' ? (
+                  <WorkoutInfo>Motivo: {workout.reason}</WorkoutInfo>
+                ) : (
+                  <ExerciseList>
+                    {workout.exercises?.map((exercise) => {
+                      const exerciseInfo = getExerciseInfo(workout.workoutId, workout.dayId, exercise.exerciseId, data);
+                      if (!exerciseInfo) return null;
+                      
+                      return (
+                        <ExerciseItem key={exercise.exerciseId}>
+                          <span>{exerciseInfo.name}</span>
+                          <ExerciseStatus status={exercise.status}>
+                            {getStatusText(exercise.status)}
+                          </ExerciseStatus>
+                        </ExerciseItem>
+                      );
+                    })}
+                  </ExerciseList>
+                )}
+              </WorkoutHistoryCard>
+            );
+          })}
         </WorkoutList>
       </WorkoutHistory>
 

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Card from './Card';
 import Input from './Input';
 import Button from './Button';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const ExerciseHeader = styled.div`
   display: flex;
@@ -46,10 +46,17 @@ const MinimizedCard = styled(Card)`
   }
 `;
 
-const ExerciseCard = ({ exercise, onUpdateWeight }) => {
+const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted }) => {
   const [newWeight, setNewWeight] = useState('');
   const [minimized, setMinimized] = useState(false);
   const [concluded, setConcluded] = useState(false);
+
+  useEffect(() => {
+    if (isCompleted) {
+      setMinimized(true);
+      setConcluded(true);
+    }
+  }, [isCompleted]);
 
   const handleCheck = () => {
     if (newWeight.trim() !== '') {
@@ -65,7 +72,7 @@ const ExerciseCard = ({ exercise, onUpdateWeight }) => {
 
   if (minimized) {
     return (
-      <MinimizedCard variant="elevated" size="medium" fullWidth onClick={() => setMinimized(false)}>
+      <MinimizedCard variant="elevated" size="medium" fullWidth onClick={() => !isCompleted && setMinimized(false)}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <span>{exercise.name}</span>
           <span>{exercise.sets} x {exercise.reps} {exercise.weight}kg</span>
@@ -85,7 +92,7 @@ const ExerciseCard = ({ exercise, onUpdateWeight }) => {
         </ExerciseDetails>
       </ExerciseHeader>
       <ExerciseInputRow>
-        <Button size="small" variant="secondary" onClick={handleConclude}>
+        <Button size="small" variant="secondary" onClick={handleConclude} disabled={isCompleted}>
           Concluir
         </Button>
         <RightGroup>
@@ -96,8 +103,9 @@ const ExerciseCard = ({ exercise, onUpdateWeight }) => {
             onChange={e => setNewWeight(e.target.value)}
             size="small"
             style={{ maxWidth: 100 }}
+            disabled={isCompleted}
           />
-          <Button size="small" onClick={handleCheck}>
+          <Button size="small" onClick={handleCheck} disabled={isCompleted}>
             ✓
           </Button>
         </RightGroup>

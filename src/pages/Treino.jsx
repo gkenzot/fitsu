@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useStorageContext } from '../contexts/StorageContext';
 import { Card, Button } from '../components/ui';
 import ExerciseCard from '../components/ui/ExerciseCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const TreinoContainer = styled.div`
   display: flex;
@@ -42,6 +42,8 @@ const ExerciseList = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${props => props.theme.spacing.md};
+  opacity: ${props => props.isCompleted ? 0.7 : 1};
+  pointer-events: ${props => props.isCompleted ? 'none' : 'auto'};
 `;
 
 const StatusBadge = styled.span`
@@ -98,7 +100,15 @@ const Treino = () => {
   const { data, updateData } = useStorageContext();
   const [isCompleted, setIsCompleted] = useState(false);
 
-  if (!data) {
+  useEffect(() => {
+    if (data?.workoutHistory) {
+      const today = new Date().toISOString().split('T')[0];
+      const todayWorkout = data.workoutHistory[today];
+      setIsCompleted(todayWorkout?.status === 'completed');
+    }
+  }, [data]);
+
+  if (!data || !data.workouts) {
     return <div>Carregando...</div>;
   }
 
@@ -147,10 +157,11 @@ const Treino = () => {
       week: "Semana Atual",
       dayOfWeek: getDayName(currentDay),
       workoutId: activeWorkout.id,
+      dayId: activeWorkout.schedule[currentDay]?.id,
       status: "completed",
       exercises: todayExercises.map(exercise => ({
         exerciseId: exercise.exerciseId,
-        name: data.exercises.find(e => e.id === exercise.exerciseId)?.name || 'Exercício',
+        name: `Exercício ${exercise.exerciseId}`,
         sets: exercise.sets,
         reps: exercise.reps,
         weight: exercise.weight,
@@ -174,23 +185,21 @@ const Treino = () => {
         </Subtitle>
       </Title>
       
-      <ExerciseList>
-        {todayExercises.map((exercise) => {
-          const exerciseData = data.exercises.find(e => e.id === exercise.exerciseId);
-          return (
-            <ExerciseCard
-              key={exercise.exerciseId}
-              exercise={{
-                id: exercise.exerciseId,
-                name: exerciseData?.name || 'Exercício',
-                sets: exercise.sets,
-                reps: exercise.reps,
-                weight: exercise.weight
-              }}
-              onUpdateWeight={handleUpdateWeight}
-            />
-          );
-        })}
+      <ExerciseList isCompleted={isCompleted}>
+        {todayExercises.map((exercise) => (
+          <ExerciseCard
+            key={exercise.exerciseId}
+            exercise={{
+              id: exercise.exerciseId,
+              name: `Exercício ${exercise.exerciseId}`,
+              sets: exercise.sets,
+              reps: exercise.reps,
+              weight: exercise.weight
+            }}
+            onUpdateWeight={handleUpdateWeight}
+            isCompleted={isCompleted}
+          />
+        ))}
       </ExerciseList>
 
       {!isCompleted && (

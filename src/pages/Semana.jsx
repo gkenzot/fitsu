@@ -137,38 +137,40 @@ const diasDaSemana = [
 const Semana = () => {
   const { data } = useStorageContext();
 
-  if (!data) {
+  if (!data || !data.workouts) {
     return <div>Carregando...</div>;
   }
 
   const activeWorkout = data.workouts.find(workout => workout.status === 'active');
 
+  if (!activeWorkout) {
+    return (
+      <SemanaContainer>
+        <Title>Nenhum treino ativo no momento</Title>
+      </SemanaContainer>
+    );
+  }
+
   return (
     <SemanaContainer>
       <Title>Planejamento Semanal</Title>
-      {activeWorkout && (
-        <Subtitle>
-          {activeWorkout.name} - {activeWorkout.schedule[Object.keys(activeWorkout.schedule)[0]]?.name}
-        </Subtitle>
-      )}
+      <Subtitle>
+        {activeWorkout.name}
+      </Subtitle>
 
       <WeekGrid>
         {diasDaSemana.map(({ id, name, emoji }) => {
-          const dayPlan = data.weeklyPlan[id];
-          const workout = dayPlan?.workoutId ? 
-            data.workouts.find(w => w.id === dayPlan.workoutId) : null;
-          const daySchedule = workout?.schedule[id];
+          const daySchedule = activeWorkout.schedule[id];
           const exerciseCount = daySchedule?.exercises?.length || 0;
+          const status = daySchedule ? 'open' : 'rest';
 
           return (
-            <DayCard key={id} status={dayPlan?.status}>
+            <DayCard key={id} status={status}>
               <DayTitle>
                 {emoji} {name}
-                {dayPlan?.status && (
-                  <StatusBadge status={dayPlan.status}>
-                    {getStatusText(dayPlan.status)}
-                  </StatusBadge>
-                )}
+                <StatusBadge status={status}>
+                  {getStatusText(status)}
+                </StatusBadge>
               </DayTitle>
 
               {daySchedule ? (

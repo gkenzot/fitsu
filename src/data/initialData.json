@@ -13,28 +13,29 @@
       "id": 1,
       "name": "Treino A",
       "status": "completed",
-      "startDate": "2024-03-01",
-      "endDate": "2024-03-15",
+      "startDate": "2025-06-02",
+      "endDate": "2025-06-08",
       "schedule": {
         "monday": {
+          "id": 1,
           "name": "Costas e Bíceps",
           "exercises": [
             {
-              "exerciseId": "supino-reto",
+              "exerciseId": 1,
               "sets": 4,
               "reps": 12,
               "weight": 60,
               "notes": "Aumentar peso na próxima semana"
             },
             {
-              "exerciseId": "puxada-frente",
+              "exerciseId": 4,
               "sets": 4,
               "reps": 12,
               "weight": 50,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "leg-press",
+              "exerciseId": 11,
               "sets": 4,
               "reps": 15,
               "weight": 100,
@@ -43,24 +44,25 @@
           ]
         },
         "tuesday": {
+          "id": 2,
           "name": "Pernas",
           "exercises": [
             {
-              "exerciseId": "agachamento",
+              "exerciseId": 10,
               "sets": 4,
               "reps": 12,
               "weight": 80,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "extensora",
+              "exerciseId": 12,
               "sets": 3,
               "reps": 15,
               "weight": 40,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "flexora",
+              "exerciseId": 13,
               "sets": 3,
               "reps": 15,
               "weight": 35,
@@ -69,24 +71,25 @@
           ]
         },
         "wednesday": {
+          "id": 3,
           "name": "Ombros e Tríceps",
           "exercises": [
             {
-              "exerciseId": "desenvolvimento",
+              "exerciseId": 15,
               "sets": 4,
               "reps": 12,
               "weight": 40,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "elevacao-lateral",
+              "exerciseId": 14,
               "sets": 3,
               "reps": 15,
               "weight": 8,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "triceps-pulley",
+              "exerciseId": 8,
               "sets": 3,
               "reps": 15,
               "weight": 25,
@@ -95,24 +98,25 @@
           ]
         },
         "thursday": {
+          "id": 4,
           "name": "Costas e Bíceps",
           "exercises": [
             {
-              "exerciseId": "remada-baixa",
+              "exerciseId": 5,
               "sets": 4,
               "reps": 12,
               "weight": 45,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "puxada-frente",
+              "exerciseId": 4,
               "sets": 4,
               "reps": 12,
               "weight": 50,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "biceps-rosca",
+              "exerciseId": 6,
               "sets": 3,
               "reps": 12,
               "weight": 20,
@@ -121,24 +125,25 @@
           ]
         },
         "friday": {
+          "id": 5,
           "name": "Pernas",
           "exercises": [
             {
-              "exerciseId": "leg-press",
+              "exerciseId": 11,
               "sets": 4,
               "reps": 15,
               "weight": 100,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "extensora",
+              "exerciseId": 12,
               "sets": 3,
               "reps": 15,
               "weight": 40,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "flexora",
+              "exerciseId": 13,
               "sets": 3,
               "reps": 15,
               "weight": 35,
@@ -147,24 +152,25 @@
           ]
         },
         "saturday": {
+          "id": 6,
           "name": "Peito e Tríceps",
           "exercises": [
             {
-              "exerciseId": "supino-inclinado",
+              "exerciseId": 2,
               "sets": 4,
               "reps": 12,
               "weight": 50,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "crucifixo",
+              "exerciseId": 3,
               "sets": 3,
               "reps": 15,
               "weight": 12,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "triceps-frances",
+              "exerciseId": 9,
               "sets": 3,
               "reps": 15,
               "weight": 20,
@@ -178,27 +184,28 @@
       "id": 2,
       "name": "Treino B",
       "status": "active",
-      "startDate": "2024-03-16",
+      "startDate": "2025-06-09",
       "schedule": {
         "monday": {
+          "id": 1,
           "name": "Costas e Bíceps",
           "exercises": [
             {
-              "exerciseId": "supino-reto",
+              "exerciseId": 1,
               "sets": 4,
               "reps": 12,
               "weight": 65,
               "notes": "Aumentar peso na próxima semana"
             },
             {
-              "exerciseId": "puxada-frente",
+              "exerciseId": 4,
               "sets": 4,
               "reps": 12,
               "weight": 55,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "leg-press",
+              "exerciseId": 11,
               "sets": 4,
               "reps": 15,
               "weight": 110,
@@ -207,24 +214,25 @@
           ]
         },
         "tuesday": {
+          "id": 2,
           "name": "Pernas",
           "exercises": [
             {
-              "exerciseId": "agachamento",
+              "exerciseId": 10,
               "sets": 4,
               "reps": 12,
               "weight": 85,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "extensora",
+              "exerciseId": 12,
               "sets": 3,
               "reps": 15,
               "weight": 45,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "flexora",
+              "exerciseId": 13,
               "sets": 3,
               "reps": 15,
               "weight": 40,
@@ -233,24 +241,25 @@
           ]
         },
         "wednesday": {
+          "id": 3,
           "name": "Ombros e Tríceps",
           "exercises": [
             {
-              "exerciseId": "desenvolvimento",
+              "exerciseId": 15,
               "sets": 4,
               "reps": 12,
               "weight": 45,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "elevacao-lateral",
+              "exerciseId": 14,
               "sets": 3,
               "reps": 15,
               "weight": 10,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "triceps-pulley",
+              "exerciseId": 8,
               "sets": 3,
               "reps": 15,
               "weight": 30,
@@ -259,24 +268,25 @@
           ]
         },
         "thursday": {
+          "id": 4,
           "name": "Costas e Bíceps",
           "exercises": [
             {
-              "exerciseId": "remada-baixa",
+              "exerciseId": 5,
               "sets": 4,
               "reps": 12,
               "weight": 50,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "puxada-frente",
+              "exerciseId": 4,
               "sets": 4,
               "reps": 12,
               "weight": 55,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "biceps-rosca",
+              "exerciseId": 6,
               "sets": 3,
               "reps": 12,
               "weight": 22,
@@ -285,24 +295,25 @@
           ]
         },
         "friday": {
+          "id": 5,
           "name": "Pernas",
           "exercises": [
             {
-              "exerciseId": "leg-press",
+              "exerciseId": 11,
               "sets": 4,
               "reps": 15,
               "weight": 110,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "extensora",
+              "exerciseId": 12,
               "sets": 3,
               "reps": 15,
               "weight": 45,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "flexora",
+              "exerciseId": 13,
               "sets": 3,
               "reps": 15,
               "weight": 40,
@@ -311,24 +322,25 @@
           ]
         },
         "saturday": {
+          "id": 6,
           "name": "Peito e Tríceps",
           "exercises": [
             {
-              "exerciseId": "supino-inclinado",
+              "exerciseId": 2,
               "sets": 4,
               "reps": 12,
               "weight": 55,
               "notes": "Aumentar peso"
             },
             {
-              "exerciseId": "crucifixo",
+              "exerciseId": 3,
               "sets": 3,
               "reps": 15,
               "weight": 14,
               "notes": "Manter peso"
             },
             {
-              "exerciseId": "triceps-frances",
+              "exerciseId": 9,
               "sets": 3,
               "reps": 15,
               "weight": 22,
@@ -339,183 +351,51 @@
       }
     }
   ],
-  "exercises": [
-    {
-      "id": "supino-reto",
-      "name": "Supino Reto",
-      "muscleGroup": "Peito"
-    },
-    {
-      "id": "supino-inclinado",
-      "name": "Supino Inclinado",
-      "muscleGroup": "Peito"
-    },
-    {
-      "id": "crucifixo",
-      "name": "Crucifixo",
-      "muscleGroup": "Peito"
-    },
-    {
-      "id": "puxada-frente",
-      "name": "Puxada Frontal",
-      "muscleGroup": "Costas"
-    },
-    {
-      "id": "remada-baixa",
-      "name": "Remada Baixa",
-      "muscleGroup": "Costas"
-    },
-    {
-      "id": "desenvolvimento",
-      "name": "Desenvolvimento",
-      "muscleGroup": "Ombro"
-    },
-    {
-      "id": "elevacao-lateral",
-      "name": "Elevação Lateral",
-      "muscleGroup": "Ombro"
-    },
-    {
-      "id": "biceps-rosca",
-      "name": "Rosca Bíceps",
-      "muscleGroup": "Bíceps"
-    },
-    {
-      "id": "triceps-pulley",
-      "name": "Tríceps Pulley",
-      "muscleGroup": "Tríceps"
-    },
-    {
-      "id": "triceps-frances",
-      "name": "Tríceps Francês",
-      "muscleGroup": "Tríceps"
-    },
-    {
-      "id": "agachamento",
-      "name": "Agachamento",
-      "muscleGroup": "Perna"
-    },
-    {
-      "id": "leg-press",
-      "name": "Leg Press",
-      "muscleGroup": "Perna"
-    },
-    {
-      "id": "extensora",
-      "name": "Extensora",
-      "muscleGroup": "Perna"
-    },
-    {
-      "id": "flexora",
-      "name": "Flexora",
-      "muscleGroup": "Perna"
-    }
-  ],
-  "weeklyPlan": {
-    "monday": {
-      "workoutId": 2,
-      "status": "completed",
-      "completedAt": "2024-03-18T10:00:00"
-    },
-    "tuesday": {
-      "workoutId": 2,
-      "status": "missed",
-      "scheduledAt": "2024-03-19T10:00:00"
-    },
-    "wednesday": {
-      "workoutId": 2,
-      "status": "partial",
-      "scheduledAt": "2024-03-20T10:00:00"
-    },
-    "thursday": {
-      "workoutId": 2,
-      "status": "open",
-      "scheduledAt": "2024-03-21T10:00:00"
-    },
-    "friday": {
-      "workoutId": 2,
-      "status": "locked",
-      "scheduledAt": "2024-03-22T10:00:00"
-    },
-    "saturday": {
-      "workoutId": 2,
-      "status": "locked",
-      "scheduledAt": "2024-03-23T10:00:00"
-    },
-    "sunday": {
-      "status": "rest"
-    }
-  },
   "workoutHistory": {
-    "2024-03-18": {
-      "week": "Semana 1",
-      "dayOfWeek": "Segunda-feira",
+    "2025-06-02": {
+      "weekId": 1,
+      "dayId": 1,
       "workoutId": 2,
       "status": "completed",
       "exercises": [
         {
-          "exerciseId": "supino-reto",
-          "name": "Supino Reto",
-          "sets": 4,
-          "reps": 12,
-          "weight": 65,
+          "exerciseId": 1,
           "status": "completed"
         },
         {
-          "exerciseId": "puxada-frente",
-          "name": "Puxada Frontal",
-          "sets": 4,
-          "reps": 12,
-          "weight": 55,
+          "exerciseId": 4,
           "status": "completed"
         },
         {
-          "exerciseId": "leg-press",
-          "name": "Leg Press",
-          "sets": 4,
-          "reps": 15,
-          "weight": 110,
+          "exerciseId": 11,
           "status": "completed"
         }
       ]
     },
-    "2024-03-19": {
-      "week": "Semana 1",
-      "dayOfWeek": "Terça-feira",
+    "2025-06-03": {
+      "weekId": 1,
+      "dayId": 2,
       "workoutId": 2,
       "status": "missed",
       "reason": "Doente"
     },
-    "2024-03-20": {
-      "week": "Semana 1",
-      "dayOfWeek": "Quarta-feira",
+    "2025-06-09": {
+      "weekId": 2,
+      "dayId": 1,
       "workoutId": 2,
-      "status": "partial",
+      "status": "completed",
       "exercises": [
         {
-          "exerciseId": "desenvolvimento",
-          "name": "Desenvolvimento",
-          "sets": 4,
-          "reps": 12,
-          "weight": 45,
+          "exerciseId": 1,
           "status": "completed"
         },
         {
-          "exerciseId": "elevacao-lateral",
-          "name": "Elevação Lateral",
-          "sets": 3,
-          "reps": 15,
-          "weight": 10,
+          "exerciseId": 4,
           "status": "completed"
         },
         {
-          "exerciseId": "triceps-pulley",
-          "name": "Tríceps Pulley",
-          "sets": 3,
-          "reps": 15,
-          "weight": 30,
-          "status": "incomplete",
-          "notes": "Academia fechou mais cedo"
+          "exerciseId": 11,
+          "status": "completed"
         }
       ]
     }

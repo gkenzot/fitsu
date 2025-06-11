@@ -22,12 +22,12 @@ const NavContainer = styled.nav`
   margin: 0 auto;
 `;
 
-const NavLink = styled(Link)`
+const StyledLink = styled(Link)`
   display: flex;
   flex-direction: column;
   align-items: center;
   text-decoration: none;
-  color: ${props => props.isActive ? props.theme.colors.primary : props.theme.colors.text.secondary};
+  color: ${props => props.$isActive ? props.theme.colors.primary : props.theme.colors.text.secondary};
   transition: color 0.2s ease;
   padding: ${props => props.theme.spacing.xs};
   font-size: ${props => props.theme.fontSizes.xs};
@@ -57,14 +57,14 @@ const Footer = () => {
     <FooterContainer>
       <NavContainer>
         {navItems.map((item) => (
-          <NavLink 
+          <StyledLink 
             key={item.path} 
             to={item.path}
-            isActive={location.pathname === item.path}
+            $isActive={location.pathname === item.path}
           >
             <IconWrapper>{item.icon}</IconWrapper>
             {item.label}
-          </NavLink>
+          </StyledLink>
         ))}
       </NavContainer>
     </FooterContainer>
