@@ -10,13 +10,14 @@
   },
   "workouts": [
     {
-      "id": "Treino A",
+      "id": 1,
       "name": "Treino A",
       "status": "completed",
       "startDate": "2024-03-01",
       "endDate": "2024-03-15",
       "schedule": {
         "monday": {
+          "name": "Costas e Bíceps",
           "exercises": [
             {
               "exerciseId": "supino-reto",
@@ -42,6 +43,7 @@
           ]
         },
         "tuesday": {
+          "name": "Pernas",
           "exercises": [
             {
               "exerciseId": "agachamento",
@@ -67,6 +69,7 @@
           ]
         },
         "wednesday": {
+          "name": "Ombros e Tríceps",
           "exercises": [
             {
               "exerciseId": "desenvolvimento",
@@ -92,6 +95,7 @@
           ]
         },
         "thursday": {
+          "name": "Costas e Bíceps",
           "exercises": [
             {
               "exerciseId": "remada-baixa",
@@ -117,6 +121,7 @@
           ]
         },
         "friday": {
+          "name": "Pernas",
           "exercises": [
             {
               "exerciseId": "leg-press",
@@ -142,6 +147,7 @@
           ]
         },
         "saturday": {
+          "name": "Peito e Tríceps",
           "exercises": [
             {
               "exerciseId": "supino-inclinado",
@@ -169,12 +175,13 @@
       }
     },
     {
-      "id": "Treino B",
+      "id": 2,
       "name": "Treino B",
       "status": "active",
       "startDate": "2024-03-16",
       "schedule": {
         "monday": {
+          "name": "Costas e Bíceps",
           "exercises": [
             {
               "exerciseId": "supino-reto",
@@ -200,6 +207,7 @@
           ]
         },
         "tuesday": {
+          "name": "Pernas",
           "exercises": [
             {
               "exerciseId": "agachamento",
@@ -225,6 +233,7 @@
           ]
         },
         "wednesday": {
+          "name": "Ombros e Tríceps",
           "exercises": [
             {
               "exerciseId": "desenvolvimento",
@@ -250,6 +259,7 @@
           ]
         },
         "thursday": {
+          "name": "Costas e Bíceps",
           "exercises": [
             {
               "exerciseId": "remada-baixa",
@@ -275,6 +285,7 @@
           ]
         },
         "friday": {
+          "name": "Pernas",
           "exercises": [
             {
               "exerciseId": "leg-press",
@@ -300,6 +311,7 @@
           ]
         },
         "saturday": {
+          "name": "Peito e Tríceps",
           "exercises": [
             {
               "exerciseId": "supino-inclinado",
@@ -401,32 +413,32 @@
   ],
   "weeklyPlan": {
     "monday": {
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "completed",
       "completedAt": "2024-03-18T10:00:00"
     },
     "tuesday": {
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "missed",
       "scheduledAt": "2024-03-19T10:00:00"
     },
     "wednesday": {
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "partial",
       "scheduledAt": "2024-03-20T10:00:00"
     },
     "thursday": {
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "open",
       "scheduledAt": "2024-03-21T10:00:00"
     },
     "friday": {
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "locked",
       "scheduledAt": "2024-03-22T10:00:00"
     },
     "saturday": {
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "locked",
       "scheduledAt": "2024-03-23T10:00:00"
     },
@@ -438,7 +450,7 @@
     "2024-03-18": {
       "week": "Semana 1",
       "dayOfWeek": "Segunda-feira",
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "completed",
       "exercises": [
         {
@@ -470,14 +482,14 @@
     "2024-03-19": {
       "week": "Semana 1",
       "dayOfWeek": "Terça-feira",
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "missed",
       "reason": "Doente"
     },
     "2024-03-20": {
       "week": "Semana 1",
       "dayOfWeek": "Quarta-feira",
-      "workoutId": "Treino B",
+      "workoutId": 2,
       "status": "partial",
       "exercises": [
         {

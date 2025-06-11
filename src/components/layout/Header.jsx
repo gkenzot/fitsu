@@ -103,9 +103,6 @@ const Header = () => {
                 <WelcomeMessage>
                   Seja bem-vindo, {data?.user?.name || 'Usuário'}!
                 </WelcomeMessage>
-                <Button onClick={logout} variant="secondary">
-                  Sair
-                </Button>
               </>
             ) : (
               <>

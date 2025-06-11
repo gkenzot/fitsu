@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useStorageContext } from '../contexts/StorageContext';
+import { useAuth } from '../contexts/AuthContext';
 import { Card, Button } from '../components/ui';
 
 const PerfilContainer = styled.div`
@@ -138,6 +139,7 @@ const getStatusText = (status) => {
 const Perfil = () => {
   const { data } = useStorageContext();
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   if (!data) {
     return <div>Carregando...</div>;
@@ -153,9 +155,11 @@ const Perfil = () => {
             <ProfileName>{data.user.name}</ProfileName>
             <ProfileEmail>{data.user.email}</ProfileEmail>
           </ProfileInfo>
-          <Button onClick={() => navigate('/app/editar-perfil')}>
-            Editar Perfil
-          </Button>
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <Button onClick={() => navigate('/app/editar-perfil')}>
+              Editar Perfil
+            </Button>
+          </div>
         </ProfileHeader>
 
         <StatsGrid>
@@ -201,6 +205,10 @@ const Perfil = () => {
             ))}
         </WorkoutList>
       </WorkoutHistory>
+
+      <Button onClick={logout} variant="secondary" style={{ alignSelf: 'center', marginTop: '2rem' }}>
+        Sair
+      </Button>
     </PerfilContainer>
   );
 };
