@@ -1,32 +1,35 @@
 import styled from 'styled-components';
 import { useStorageContext } from '../contexts/StorageContext';
 import { Card } from '../components/ui';
+import ExerciseDetails from '../components/ui/ExerciseDetails';
+import { useState } from 'react';
+import { getCompleteExerciseData } from '../utils/exerciseUtils';
 
 const SemanaContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${props => props.theme.spacing.lg};
+  gap: ${props => props.theme.spacing.md};
 `;
 
 const Title = styled.h1`
   color: ${props => props.theme.colors.text.primary};
-  margin-bottom: ${props => props.theme.spacing.md};
+  margin-bottom: ${props => props.theme.spacing.sm};
 `;
 
 const Subtitle = styled.h2`
   color: ${props => props.theme.colors.text.secondary};
-  font-size: 1.2rem;
-  margin-bottom: ${props => props.theme.spacing.lg};
+  font-size: 1.1rem;
+  margin-bottom: ${props => props.theme.spacing.md};
 `;
 
 const WeekGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: ${props => props.theme.spacing.md};
+  gap: ${props => props.theme.spacing.sm};
 `;
 
 const DayCard = styled(Card)`
-  padding: ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.md};
   background-color: ${props => {
     switch (props.status) {
       case 'completed':
@@ -45,44 +48,51 @@ const DayCard = styled(Card)`
         return props.theme.colors.background.card;
     }
   }};
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
 `;
 
 const DayTitle = styled.h2`
   color: ${props => props.theme.colors.text.primary};
-  margin-bottom: ${props => props.theme.spacing.md};
+  margin-bottom: 4px;
   display: flex;
   align-items: center;
-  gap: ${props => props.theme.spacing.sm};
+  gap: ${props => props.theme.spacing.xs};
+  font-size: 1rem;
 `;
 
 const WorkoutList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${props => props.theme.spacing.sm};
 `;
 
 const WorkoutItem = styled.div`
-  padding: ${props => props.theme.spacing.md};
+  padding: 6px;
   background-color: ${props => props.theme.colors.background.secondary};
-  border-radius: ${props => props.theme.borderRadius.md};
+  border-radius: ${props => props.theme.borderRadius.sm};
 `;
 
 const WorkoutName = styled.h3`
   color: ${props => props.theme.colors.text.primary};
-  margin-bottom: ${props => props.theme.spacing.xs};
-  font-size: 1rem;
+  margin-bottom: 2px;
+  font-size: 0.9rem;
 `;
 
 const ExerciseCount = styled.p`
   color: ${props => props.theme.colors.text.secondary};
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  margin: 0;
 `;
 
 const StatusBadge = styled.span`
   display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.9rem;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
   background-color: ${props => {
     switch (props.status) {
       case 'completed':
@@ -102,7 +112,14 @@ const StatusBadge = styled.span`
     }
   }};
   color: white;
-  margin-left: ${props => props.theme.spacing.sm};
+  margin-left: ${props => props.theme.spacing.xs};
+`;
+
+const ExerciseList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${props => props.theme.spacing.sm};
+  margin-top: 8px;
 `;
 
 const getStatusText = (status) => {
@@ -136,6 +153,7 @@ const diasDaSemana = [
 
 const Semana = () => {
   const { data } = useStorageContext();
+  const [expandedDay, setExpandedDay] = useState(null);
 
   if (!data || !data.workouts) {
     return <div>Carregando...</div>;
@@ -151,6 +169,10 @@ const Semana = () => {
     );
   }
 
+  const handleDayClick = (dayId) => {
+    setExpandedDay(expandedDay === dayId ? null : dayId);
+  };
+
   return (
     <SemanaContainer>
       <Title>Planejamento Semanal</Title>
@@ -163,9 +185,14 @@ const Semana = () => {
           const daySchedule = activeWorkout.schedule[id];
           const exerciseCount = daySchedule?.exercises?.length || 0;
           const status = daySchedule ? 'open' : 'rest';
+          const isExpanded = expandedDay === id;
 
           return (
-            <DayCard key={id} status={status}>
+            <DayCard 
+              key={id} 
+              status={status}
+              onClick={() => handleDayClick(id)}
+            >
               <DayTitle>
                 {emoji} {name}
                 <StatusBadge status={status}>
@@ -174,12 +201,36 @@ const Semana = () => {
               </DayTitle>
 
               {daySchedule ? (
-                <WorkoutList>
-                  <WorkoutItem>
-                    <WorkoutName>{daySchedule.name}</WorkoutName>
-                    <ExerciseCount>{exerciseCount} exercícios</ExerciseCount>
-                  </WorkoutItem>
-                </WorkoutList>
+                <>
+                  <WorkoutList>
+                    <WorkoutItem>
+                      <WorkoutName>{daySchedule.name}</WorkoutName>
+                      <ExerciseCount>{exerciseCount} exercícios</ExerciseCount>
+                    </WorkoutItem>
+                  </WorkoutList>
+                  
+                  {isExpanded && (
+                    <ExerciseList>
+                      {daySchedule.exercises.map((exercise) => {
+                        const completeExerciseData = getCompleteExerciseData(
+                          activeWorkout.id,
+                          daySchedule.id,
+                          exercise.exerciseId,
+                          data
+                        );
+                        
+                        if (!completeExerciseData) return null;
+                        
+                        return (
+                          <ExerciseDetails 
+                            key={exercise.exerciseId} 
+                            exercise={completeExerciseData}
+                          />
+                        );
+                      })}
+                    </ExerciseList>
+                  )}
+                </>
               ) : (
                 <WorkoutList>
                   <WorkoutItem>
