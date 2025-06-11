@@ -7,7 +7,7 @@ import Cadastro from '../pages/Cadastro';
 import Dashboard from '../pages/Dashboard';
 import Semana from '../pages/Semana';
 import Treino from '../pages/Treino';
-import NovoTreino from '../pages/NovoTreino';
+import Historico from '../pages/Historico';
 import Perfil from '../pages/Perfil';
 import EditarPerfil from '../pages/EditarPerfil';
 
@@ -38,9 +38,9 @@ const AppRoutes = () => {
               <Treino />
             </PrivateRoute>
           } />
-          <Route path="novo-treino" element={
+          <Route path="historico" element={
             <PrivateRoute>
-              <NovoTreino />
+              <Historico />
             </PrivateRoute>
           } />
           <Route path="perfil" element={

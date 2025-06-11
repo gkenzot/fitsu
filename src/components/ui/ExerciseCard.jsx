@@ -15,6 +15,11 @@ const ExerciseName = styled.h3`
   color: ${props => props.theme.colors.text.primary};
   font-size: 1.1rem;
   margin: 0;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    opacity: 0.8;
+  }
 `;
 
 const ExerciseDetails = styled.div`
@@ -26,7 +31,7 @@ const ExerciseDetails = styled.div`
 
 const ExerciseInputRow = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
   margin-top: ${props => props.theme.spacing.md};
 `;
@@ -37,19 +42,56 @@ const RightGroup = styled.div`
   align-items: center;
 `;
 
-const MinimizedCard = styled(Card)`
+const CheckboxContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${props => props.theme.spacing.sm};
+  margin-right: auto;
+`;
+
+const Checkbox = styled.input`
+  width: 18px;
+  height: 18px;
   cursor: pointer;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-  &:hover {
-    opacity: 1;
+  &:disabled {
+    cursor: not-allowed;
   }
 `;
 
-const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted }) => {
+const CheckboxLabel = styled.label`
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
+const MinimizedCard = styled(Card)`
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
+  ${props => props.concluded && `
+    border-left: 4px solid ${props.theme.colors.success};
+  `}
+`;
+
+const StyledCard = styled(Card)`
+  position: relative;
+  ${props => props.concluded && `
+    border-left: 4px solid ${props.theme.colors.success};
+  `}
+`;
+
+const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted, onStatusChange }) => {
   const [newWeight, setNewWeight] = useState('');
   const [minimized, setMinimized] = useState(false);
-  const [concluded, setConcluded] = useState(false);
+  const [concluded, setConcluded] = useState(exercise.status === 'completed');
 
   useEffect(() => {
     if (isCompleted) {
@@ -65,16 +107,40 @@ const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted }) => {
     }
   };
 
-  const handleConclude = () => {
-    setConcluded(true);
-    setMinimized(true);
+  const handleConclude = (e) => {
+    const newConcludedState = e.target.checked;
+    setConcluded(newConcludedState);
+    if (onStatusChange) {
+      onStatusChange(exercise.id, newConcludedState ? 'completed' : 'pending');
+    }
+    if (newConcludedState) {
+      setMinimized(true);
+    }
+  };
+
+  const handleNameClick = () => {
+    if (!isCompleted) {
+      setMinimized(!minimized);
+    }
+  };
+
+  const handleMinimizedCardClick = () => {
+    if (!isCompleted) {
+      setMinimized(false);
+    }
   };
 
   if (minimized) {
     return (
-      <MinimizedCard variant="elevated" size="medium" fullWidth onClick={() => !isCompleted && setMinimized(false)}>
+      <MinimizedCard 
+        variant="elevated" 
+        size="medium" 
+        fullWidth 
+        concluded={concluded}
+        onClick={handleMinimizedCardClick}
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span>{exercise.name}</span>
+          <ExerciseName>{exercise.name}</ExerciseName>
           <span>{exercise.sets} x {exercise.reps} {exercise.weight}kg</span>
         </div>
       </MinimizedCard>
@@ -82,9 +148,9 @@ const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted }) => {
   }
 
   return (
-    <Card variant="elevated" size="medium" fullWidth>
+    <StyledCard variant="elevated" size="medium" fullWidth concluded={concluded}>
       <ExerciseHeader>
-        <ExerciseName>{exercise.name}</ExerciseName>
+        <ExerciseName onClick={handleNameClick}>{exercise.name}</ExerciseName>
         <ExerciseDetails>
           <span>{exercise.sets} séries</span>
           <span>{exercise.reps} repetições</span>
@@ -92,9 +158,18 @@ const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted }) => {
         </ExerciseDetails>
       </ExerciseHeader>
       <ExerciseInputRow>
-        <Button size="small" variant="secondary" onClick={handleConclude} disabled={isCompleted}>
-          Concluir
-        </Button>
+        <CheckboxContainer>
+          <Checkbox
+            type="checkbox"
+            id={`exercise-${exercise.id}`}
+            checked={concluded}
+            onChange={handleConclude}
+            disabled={isCompleted}
+          />
+          <CheckboxLabel htmlFor={`exercise-${exercise.id}`}>
+            Concluído
+          </CheckboxLabel>
+        </CheckboxContainer>
         <RightGroup>
           <Input
             type="number"
@@ -110,7 +185,7 @@ const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted }) => {
           </Button>
         </RightGroup>
       </ExerciseInputRow>
-    </Card>
+    </StyledCard>
   );
 };
 

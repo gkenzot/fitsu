@@ -37,6 +37,14 @@ const buttonVariants = {
       color: ${props => props.theme.colors.primaryDark};
     }
   `,
+  danger: css`
+    background-color: ${props => props.theme.colors.error};
+    color: ${props => props.theme.colors.text.primary};
+
+    &:hover {
+      background-color: ${props => props.theme.colors.error}dd;
+    }
+  `,
 };
 
 const buttonSizes = {
@@ -105,7 +113,7 @@ const Button = ({
 
 Button.propTypes = {
   children: PropTypes.node.isRequired,
-  variant: PropTypes.oneOf(['primary', 'secondary', 'outline', 'text']),
+  variant: PropTypes.oneOf(['primary', 'secondary', 'outline', 'text', 'danger']),
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   fullWidth: PropTypes.bool,
 };

@@ -36,6 +36,13 @@ export const AuthProvider = ({ children }) => {
     navigate('/');
   };
 
+  const deleteAccount = () => {
+    setUser(null);
+    localStorage.removeItem('fitsu_user');
+    localStorage.removeItem('fitsu_data');
+    navigate('/');
+  };
+
   const isAuthenticated = () => {
     return !!user;
   };
@@ -45,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, login, logout, deleteAccount, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

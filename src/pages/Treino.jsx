@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 import { useStorageContext } from '../contexts/StorageContext';
-import { Card, Button } from '../components/ui';
+import { Card, Button, Modal } from '../components/ui';
 import ExerciseCard from '../components/ui/ExerciseCard';
 import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const TreinoContainer = styled.div`
   display: flex;
@@ -67,6 +68,47 @@ const StatusBadge = styled.span`
   margin-left: ${props => props.theme.spacing.sm};
 `;
 
+const ModalContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: ${props => props.theme.spacing.md};
+`;
+
+const Alert = styled.div`
+  background-color: ${props => props.theme.colors.warning}20;
+  border: 1px solid ${props => props.theme.colors.warning};
+  border-radius: ${props => props.theme.borderRadius.sm};
+  padding: ${props => props.theme.spacing.md};
+  color: ${props => props.theme.colors.warning};
+  font-size: 0.9rem;
+  margin-top: ${props => props.theme.spacing.sm};
+`;
+
+const ModalCheckbox = styled.div`
+  display: flex;
+  align-items: center;
+  gap: ${props => props.theme.spacing.sm};
+`;
+
+const Checkbox = styled.input`
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
+const CheckboxLabel = styled.label`
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 0.9rem;
+  cursor: pointer;
+  user-select: none;
+  &:disabled {
+    cursor: not-allowed;
+  }
+`;
+
 const getStatusText = (status) => {
   switch (status) {
     case 'active':
@@ -99,6 +141,13 @@ const getCurrentDay = () => {
 const Treino = () => {
   const { data, updateData } = useStorageContext();
   const [isCompleted, setIsCompleted] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [workout, setWorkout] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [confirmCheckbox, setConfirmCheckbox] = useState(false);
 
   useEffect(() => {
     if (data?.workoutHistory) {
@@ -150,26 +199,52 @@ const Treino = () => {
     updateData({ ...data, workouts: updatedWorkouts });
   };
 
+  const handleExerciseStatusChange = (exerciseId, status) => {
+    const updatedWorkouts = data.workouts.map(workout => {
+      if (workout.id === activeWorkout.id) {
+        const updatedSchedule = { ...workout.schedule };
+        updatedSchedule[currentDay] = {
+          ...updatedSchedule[currentDay],
+          exercises: updatedSchedule[currentDay].exercises.map(exercise => {
+            if (exercise.exerciseId === exerciseId) {
+              return { ...exercise, status };
+            }
+            return exercise;
+          })
+        };
+        return { ...workout, schedule: updatedSchedule };
+      }
+      return workout;
+    });
+
+    updateData({ ...data, workouts: updatedWorkouts });
+  };
+
   const handleConcludeWorkout = () => {
     const today = new Date().toISOString().split('T')[0];
     const workoutHistory = data.workoutHistory || {};
+    
+    // Verifica se todos os exercícios foram concluídos
+    const allExercisesCompleted = todayExercises.every(exercise => exercise.status === "completed");
+    
     workoutHistory[today] = {
-      week: "Semana Atual",
-      dayOfWeek: getDayName(currentDay),
-      workoutId: activeWorkout.id,
+      weekId: activeWorkout.id === 1 ? 1 : 2,
       dayId: activeWorkout.schedule[currentDay]?.id,
-      status: "completed",
+      workoutId: activeWorkout.id,
+      status: allExercisesCompleted ? "completed" : "partial",
       exercises: todayExercises.map(exercise => ({
         exerciseId: exercise.exerciseId,
         name: `Exercício ${exercise.exerciseId}`,
         sets: exercise.sets,
         reps: exercise.reps,
         weight: exercise.weight,
-        status: "completed"
+        status: exercise.status
       }))
     };
+    
     updateData({ ...data, workoutHistory });
     setIsCompleted(true);
+    setShowConfirmModal(false);
   };
 
   return (
@@ -194,9 +269,11 @@ const Treino = () => {
               name: `Exercício ${exercise.exerciseId}`,
               sets: exercise.sets,
               reps: exercise.reps,
-              weight: exercise.weight
+              weight: exercise.weight,
+              status: exercise.status
             }}
             onUpdateWeight={handleUpdateWeight}
+            onStatusChange={handleExerciseStatusChange}
             isCompleted={isCompleted}
           />
         ))}
@@ -207,12 +284,43 @@ const Treino = () => {
           variant="primary" 
           size="large" 
           fullWidth 
-          onClick={handleConcludeWorkout}
+          onClick={() => setShowConfirmModal(true)}
           style={{ marginTop: '2rem' }}
         >
           Concluir Treino
         </Button>
       )}
+
+      <Modal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        title="Confirmar Conclusão"
+        footer={
+          <>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowConfirmModal(false)}
+            >
+              Cancelar
+            </Button>
+            <Button 
+              onClick={handleConcludeWorkout}
+            >
+              Confirmar
+            </Button>
+          </>
+        }
+      >
+        <ModalContent>
+          <p>Você tem certeza que deseja concluir este treino?</p>
+          {!todayExercises.every(exercise => exercise.status === "completed") && (
+            <Alert>
+              ⚠️ Atenção: Nem todos os exercícios foram concluídos. 
+              Este treino será salvo como parcial no seu histórico.
+            </Alert>
+          )}
+        </ModalContent>
+      </Modal>
     </TreinoContainer>
   );
 };

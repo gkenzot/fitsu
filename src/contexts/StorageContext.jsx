@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import initialData from '../data/initialData.json';
+import exercisesData from '../data/exercises.json';
 
 const StorageContext = createContext();
 
@@ -17,10 +18,12 @@ export const StorageProvider = ({ children }) => {
   useEffect(() => {
     const storedData = localStorage.getItem('fitsu_data');
     if (storedData) {
-      setData(JSON.parse(storedData));
+      const parsedData = JSON.parse(storedData);
+      setData({ ...parsedData, exercises: exercisesData.exercises });
     } else {
-      setData(initialData);
-      localStorage.setItem('fitsu_data', JSON.stringify(initialData));
+      const initialDataWithExercises = { ...initialData, exercises: exercisesData.exercises };
+      setData(initialDataWithExercises);
+      localStorage.setItem('fitsu_data', JSON.stringify(initialDataWithExercises));
     }
   }, []);
 
@@ -31,8 +34,9 @@ export const StorageProvider = ({ children }) => {
   };
 
   const resetData = () => {
-    setData(initialData);
-    localStorage.setItem('fitsu_data', JSON.stringify(initialData));
+    const initialDataWithExercises = { ...initialData, exercises: exercisesData.exercises };
+    setData(initialDataWithExercises);
+    localStorage.setItem('fitsu_data', JSON.stringify(initialDataWithExercises));
   };
 
   return (

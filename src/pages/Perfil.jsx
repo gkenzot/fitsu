@@ -1,10 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useStorageContext } from '../contexts/StorageContext';
 import { useAuth } from '../contexts/AuthContext';
-import { Card, Button } from '../components/ui';
-import { format } from 'date-fns';
-import { ptBR } from 'date-fns/locale';
+import { Card, Button, Input, Modal } from '../components/ui';
 
 const PerfilContainer = styled.div`
   display: flex;
@@ -67,151 +66,54 @@ const StatLabel = styled.div`
   font-size: 0.9rem;
 `;
 
-const WorkoutHistory = styled.section`
-  margin-top: ${props => props.theme.spacing.lg};
-`;
-
-const WorkoutList = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+const ActionButtons = styled.div`
+  display: flex;
   gap: ${props => props.theme.spacing.md};
+  justify-content: flex-end;
 `;
 
-const WorkoutHistoryCard = styled(Card)`
-  padding: ${props => props.theme.spacing.md};
-  display: flex;
-  flex-direction: column;
-  gap: ${props => props.theme.spacing.sm};
+const ErrorMessage = styled.p`
+  color: ${props => props.theme.colors.error};
+  font-size: ${props => props.theme.fontSizes.sm};
+  margin-top: ${props => props.theme.spacing.sm};
 `;
-
-const WorkoutHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const WorkoutDate = styled.div`
-  color: ${props => props.theme.colors.text.primary};
-  font-weight: bold;
-`;
-
-const WorkoutStatus = styled.span`
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
-  background-color: ${props => {
-    switch (props.status) {
-      case 'completed':
-        return props.theme.colors.success;
-      case 'partial':
-        return props.theme.colors.warning;
-      case 'missed':
-        return props.theme.colors.error;
-      default:
-        return props.theme.colors.text.secondary;
-    }
-  }};
-  color: white;
-`;
-
-const WorkoutInfo = styled.div`
-  color: ${props => props.theme.colors.text.secondary};
-  font-size: 0.9rem;
-`;
-
-const ExerciseList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: ${props => props.theme.spacing.sm} 0 0 0;
-`;
-
-const ExerciseItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid ${props => props.theme.colors.border};
-  
-  &:last-child {
-    border-bottom: none;
-  }
-`;
-
-const ExerciseStatus = styled.span`
-  color: ${props => {
-    switch (props.status) {
-      case 'completed':
-        return props.theme.colors.success;
-      case 'partial':
-        return props.theme.colors.warning;
-      case 'missed':
-        return props.theme.colors.error;
-      default:
-        return props.theme.colors.text.secondary;
-    }
-  }};
-`;
-
-const getStatusText = (status) => {
-  switch (status) {
-    case 'completed':
-      return 'Concluído';
-    case 'partial':
-      return 'Parcial';
-    case 'missed':
-      return 'Faltou';
-    default:
-      return 'Pendente';
-  }
-};
-
-const getDayName = (date) => {
-  const localDate = new Date(date + 'T00:00:00');
-  return format(localDate, 'EEEE', { locale: ptBR });
-};
-
-const getWorkoutInfo = (workoutId, dayId, data) => {
-  if (!data?.workouts) return null;
-  
-  const workout = data.workouts.find(w => w.id === workoutId);
-  if (!workout) return null;
-
-  const day = Object.values(workout.schedule).find(d => d.id === dayId);
-  if (!day) return null;
-
-  return {
-    workoutName: workout.name,
-    dayName: day.name
-  };
-};
-
-const getExerciseInfo = (workoutId, dayId, exerciseId, data) => {
-  if (!data?.workouts) return null;
-  
-  const workout = data.workouts.find(w => w.id === workoutId);
-  if (!workout) return null;
-
-  const day = Object.values(workout.schedule).find(d => d.id === dayId);
-  if (!day) return null;
-
-  const exercise = day.exercises.find(e => e.exerciseId === exerciseId);
-  if (!exercise) return null;
-
-  // Como não temos a lista de exercícios no initialData, vamos usar o ID como nome temporariamente
-  return {
-    ...exercise,
-    name: `Exercício ${exerciseId}`
-  };
-};
 
 const Perfil = () => {
   const { data } = useStorageContext();
   const navigate = useNavigate();
-  const { logout } = useAuth();
+  const { logout, deleteAccount } = useAuth();
+  const [showLogoutModal, setShowLogoutModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   if (!data || !data.user || !data.workouts) {
     return <div>Carregando...</div>;
   }
+
+  const handleDeleteAccount = () => {
+    if (password === data.user.password) {
+      deleteAccount();
+    } else {
+      setError('Senha incorreta');
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const handleOpenDeleteModal = () => {
+    setShowDeleteModal(true);
+    setPassword('');
+    setError('');
+  };
+
+  const handleCloseDeleteModal = () => {
+    setShowDeleteModal(false);
+    setPassword('');
+    setError('');
+  };
 
   return (
     <PerfilContainer>
@@ -246,56 +148,58 @@ const Perfil = () => {
         </StatsGrid>
       </ProfileCard>
 
-      <WorkoutHistory>
-        <Title>Histórico de Treinos</Title>
-        <WorkoutList>
-          {data.workoutHistory && Object.entries(data.workoutHistory).map(([date, workout]) => {
-            const workoutInfo = getWorkoutInfo(workout.workoutId, workout.dayId, data);
-            if (!workoutInfo) return null;
+      <ActionButtons>
+        <Button variant="outline" onClick={() => setShowLogoutModal(true)}>
+          Sair
+        </Button>
+        <Button variant="danger" onClick={handleOpenDeleteModal}>
+          Excluir Conta
+        </Button>
+      </ActionButtons>
 
-            return (
-              <WorkoutHistoryCard key={date}>
-                <WorkoutHeader>
-                  <WorkoutDate>
-                    {format(new Date(date + 'T00:00:00'), 'dd/MM/yyyy', { locale: ptBR })} - {getDayName(date)}
-                  </WorkoutDate>
-                  <WorkoutStatus status={workout.status}>
-                    {getStatusText(workout.status)}
-                  </WorkoutStatus>
-                </WorkoutHeader>
-                
-                <WorkoutInfo>
-                  {workoutInfo.workoutName} - {workoutInfo.dayName}
-                </WorkoutInfo>
+      <Modal
+        isOpen={showLogoutModal}
+        onClose={() => setShowLogoutModal(false)}
+        title="Confirmar Saída"
+        footer={
+          <>
+            <Button variant="outline" onClick={() => setShowLogoutModal(false)}>
+              Cancelar
+            </Button>
+            <Button onClick={handleLogout}>
+              Confirmar
+            </Button>
+          </>
+        }
+      >
+        Tem certeza que deseja sair da sua conta?
+      </Modal>
 
-                {workout.status === 'missed' ? (
-                  <WorkoutInfo>Motivo: {workout.reason}</WorkoutInfo>
-                ) : (
-                  <ExerciseList>
-                    {workout.exercises?.map((exercise) => {
-                      const exerciseInfo = getExerciseInfo(workout.workoutId, workout.dayId, exercise.exerciseId, data);
-                      if (!exerciseInfo) return null;
-                      
-                      return (
-                        <ExerciseItem key={exercise.exerciseId}>
-                          <span>{exerciseInfo.name}</span>
-                          <ExerciseStatus status={exercise.status}>
-                            {getStatusText(exercise.status)}
-                          </ExerciseStatus>
-                        </ExerciseItem>
-                      );
-                    })}
-                  </ExerciseList>
-                )}
-              </WorkoutHistoryCard>
-            );
-          })}
-        </WorkoutList>
-      </WorkoutHistory>
-
-      <Button onClick={logout} variant="secondary" style={{ alignSelf: 'center', marginTop: '2rem' }}>
-        Sair
-      </Button>
+      <Modal
+        isOpen={showDeleteModal}
+        onClose={handleCloseDeleteModal}
+        title="Excluir Conta"
+        footer={
+          <>
+            <Button variant="outline" onClick={handleCloseDeleteModal}>
+              Cancelar
+            </Button>
+            <Button variant="danger" onClick={handleDeleteAccount}>
+              Excluir
+            </Button>
+          </>
+        }
+      >
+        <p>Para confirmar a exclusão da sua conta, digite sua senha:</p>
+        <Input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Digite sua senha"
+          fullWidth
+        />
+        {error && <ErrorMessage>{error}</ErrorMessage>}
+      </Modal>
     </PerfilContainer>
   );
 };

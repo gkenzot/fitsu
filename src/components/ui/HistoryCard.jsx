@@ -33,6 +33,8 @@ const Status = styled.span`
         return props.theme.colors.warning;
       case 'missed':
         return props.theme.colors.error;
+      case 'pending':
+        return props.theme.colors.error;
       default:
         return props.theme.colors.text.secondary;
     }
@@ -72,6 +74,8 @@ const ExerciseStatus = styled.span`
         return props.theme.colors.warning;
       case 'missed':
         return props.theme.colors.error;
+      case 'pending':
+        return props.theme.colors.error;
       default:
         return props.theme.colors.text.secondary;
     }
@@ -86,8 +90,10 @@ const getStatusText = (status) => {
       return 'Parcial';
     case 'missed':
       return 'Faltou';
+    case 'pending':
+      return 'Não realizado';
     default:
-      return 'Pendente';
+      return 'Não realizado';
   }
 };
 
@@ -110,20 +116,11 @@ const getWorkoutInfo = (workoutId, dayId, data) => {
 };
 
 const getExerciseInfo = (workoutId, dayId, exerciseId, data) => {
-  const workout = data.workouts.find(w => w.id === workoutId);
-  if (!workout) return null;
-
-  const day = Object.values(workout.schedule).find(d => d.id === dayId);
-  if (!day) return null;
-
-  const exercise = day.exercises.find(e => e.exerciseId === exerciseId);
-  if (!exercise) return null;
-
-  const exerciseData = data.exercises.find(e => e.id === exerciseId);
+  const exerciseData = data.exercises.find(e => e.id === exerciseId.toString());
   if (!exerciseData) return null;
 
   return {
-    ...exercise,
+    exerciseId,
     name: exerciseData.name
   };
 };

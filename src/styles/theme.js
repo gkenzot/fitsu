@@ -18,7 +18,7 @@ const theme = {
       disabled: '#757575',
     },
     border: '#333333',
-    error: '#CF6679',
+    error: '#FF4444', // Vermelho mais vibrante para alerta
     success: '#4CAF50',
     warning: '#FFC107',
     info: '#2196F3',

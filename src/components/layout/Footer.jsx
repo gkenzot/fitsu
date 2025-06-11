@@ -49,7 +49,7 @@ const Footer = () => {
     { path: '/app/dashboard', icon: '📊', label: 'Dashboard' },
     { path: '/app/semana', icon: '📅', label: 'Semana' },
     { path: '/app/treino', icon: '💪', label: 'Treino' },
-    { path: '/app/novo-treino', icon: '➕', label: 'Novo' },
+    { path: '/app/historico', icon: '📝', label: 'Histórico' },
     { path: '/app/perfil', icon: '👤', label: 'Perfil' }
   ];
 
