@@ -24,7 +24,7 @@ const Subtitle = styled.h2`
 
 const WeekGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: ${props => props.theme.spacing.sm};
 `;
 
@@ -59,9 +59,6 @@ const DayCard = styled(Card)`
 const DayTitle = styled.h2`
   color: ${props => props.theme.colors.text.primary};
   margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  gap: ${props => props.theme.spacing.xs};
   font-size: 1rem;
 `;
 
@@ -88,58 +85,12 @@ const ExerciseCount = styled.p`
   margin: 0;
 `;
 
-const StatusBadge = styled.span`
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.75rem;
-  background-color: ${props => {
-    switch (props.status) {
-      case 'completed':
-        return props.theme.colors.success;
-      case 'missed':
-        return props.theme.colors.error;
-      case 'partial':
-        return props.theme.colors.warning;
-      case 'open':
-        return props.theme.colors.primary;
-      case 'locked':
-        return props.theme.colors.text.secondary;
-      case 'rest':
-        return props.theme.colors.text.secondary;
-      default:
-        return props.theme.colors.text.secondary;
-    }
-  }};
-  color: white;
-  margin-left: ${props => props.theme.spacing.xs};
-`;
-
 const ExerciseList = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${props => props.theme.spacing.sm};
   margin-top: 8px;
 `;
-
-const getStatusText = (status) => {
-  switch (status) {
-    case 'completed':
-      return 'Completo';
-    case 'missed':
-      return 'Perdido';
-    case 'partial':
-      return 'Parcial';
-    case 'open':
-      return 'Disponível';
-    case 'locked':
-      return 'Bloqueado';
-    case 'rest':
-      return 'Descanso';
-    default:
-      return status;
-  }
-};
 
 const diasDaSemana = [
   { id: 'monday', name: 'Segunda-feira', emoji: '💪' },
@@ -193,12 +144,7 @@ const Semana = () => {
               status={status}
               onClick={() => handleDayClick(id)}
             >
-              <DayTitle>
-                {emoji} {name}
-                <StatusBadge status={status}>
-                  {getStatusText(status)}
-                </StatusBadge>
-              </DayTitle>
+              <DayTitle>{name}</DayTitle>
 
               {daySchedule ? (
                 <>

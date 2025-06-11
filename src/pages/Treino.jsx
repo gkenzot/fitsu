@@ -149,6 +149,11 @@ const Treino = () => {
   const [error, setError] = useState(null);
   const [confirmCheckbox, setConfirmCheckbox] = useState(false);
 
+  const getExerciseName = (exerciseId) => {
+    const exercise = data.exercises.find(ex => ex.id === exerciseId.toString());
+    return exercise ? exercise.name : `Exercício ${exerciseId}`;
+  };
+
   useEffect(() => {
     if (data?.workoutHistory) {
       const today = new Date().toISOString().split('T')[0];
@@ -266,7 +271,7 @@ const Treino = () => {
             key={exercise.exerciseId}
             exercise={{
               id: exercise.exerciseId,
-              name: `Exercício ${exercise.exerciseId}`,
+              name: getExerciseName(exercise.exerciseId),
               sets: exercise.sets,
               reps: exercise.reps,
               weight: exercise.weight,

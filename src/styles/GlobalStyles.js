@@ -24,6 +24,15 @@ const GlobalStyles = createGlobalStyle`
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Esconde a barra de rolagem mantendo a funcionalidade */
+  * {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    &::-webkit-scrollbar {
+      display: none; /* Chrome, Safari and Opera */
+    }
+  }
+
   /* Elementos de texto */
   h1, h2, h3, h4, h5, h6 {
     color: ${props => props.theme.colors.text.primary};

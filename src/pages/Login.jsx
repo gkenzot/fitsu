@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { Input, Button, Card } from '../components/ui';
 import { useAuth } from '../contexts/AuthContext';
+import { useStorageContext } from '../contexts/StorageContext';
 
 const LoginContainer = styled.div`
   display: flex;
@@ -89,6 +90,15 @@ const TestButton = styled(Button)`
   }
 `;
 
+const ResetButton = styled(Button)`
+  margin-top: ${props => props.theme.spacing.md};
+  background-color: ${props => props.theme.colors.error};
+  
+  &:hover {
+    background-color: ${props => props.theme.colors.errorDark};
+  }
+`;
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -98,6 +108,7 @@ const Login = () => {
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
+  const { resetData } = useStorageContext();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -166,6 +177,12 @@ const Login = () => {
         ...prev,
         form: 'Erro ao fazer login com usuário de teste'
       }));
+    }
+  };
+
+  const handleReset = () => {
+    if (window.confirm('Tem certeza que deseja resetar todos os dados? Esta ação não pode ser desfeita.')) {
+      resetData();
     }
   };
 
@@ -247,6 +264,9 @@ const Login = () => {
         <TestButton onClick={handleTestLogin}>
           Entrar com Usuário de Teste
         </TestButton>
+        <ResetButton onClick={handleReset}>
+          Resetar Banco de Dados
+        </ResetButton>
       </TestCard>
     </LoginContainer>
   );

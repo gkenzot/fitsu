@@ -6,7 +6,18 @@
     "password": "123456",
     "height": 175,
     "weight": 75,
-    "age": 30
+    "age": 30,
+    "gender": "masculino",
+    "address": {
+      "street": "Rua Exemplo",
+      "number": "123",
+      "neighborhood": "Centro",
+      "city": "São Paulo",
+      "state": "SP",
+      "zipCode": "01234-567"
+    },
+    "cpf": "123.456.789-00",
+    "phone": "(11) 98765-4321"
   },
   "workouts": [
     {
@@ -377,6 +388,71 @@
       "status": "missed",
       "reason": "Doente"
     },
+    "2025-06-04": {
+      "dayId": 3,
+      "workoutId": 1,
+      "status": "partial",
+      "reason": "Falta de tempo",
+      "exercises": [
+        {
+          "exerciseId": 15,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 14,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 8,
+          "status": "missed"
+        }
+      ]
+    },
+    "2025-06-05": {
+      "dayId": 4,
+      "workoutId": 1,
+      "status": "completed",
+      "exercises": [
+        {
+          "exerciseId": 5,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 4,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 6,
+          "status": "completed"
+        }
+      ]
+    },
+    "2025-06-06": {
+      "dayId": 5,
+      "workoutId": 1,
+      "status": "missed",
+      "reason": "Viagem de trabalho"
+    },
+    "2025-06-07": {
+      "dayId": 6,
+      "workoutId": 1,
+      "status": "partial",
+      "reason": "Academia fechada mais cedo",
+      "exercises": [
+        {
+          "exerciseId": 2,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 3,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 9,
+          "status": "missed"
+        }
+      ]
+    },
     "2025-06-09": {
       "dayId": 1,
       "workoutId": 2,
@@ -393,6 +469,26 @@
         {
           "exerciseId": 11,
           "status": "completed"
+        }
+      ]
+    },
+    "2025-06-10": {
+      "dayId": 2,
+      "workoutId": 2,
+      "status": "partial",
+      "reason": "Dor no joelho",
+      "exercises": [
+        {
+          "exerciseId": 10,
+          "status": "completed"
+        },
+        {
+          "exerciseId": 12,
+          "status": "missed"
+        },
+        {
+          "exerciseId": 13,
+          "status": "missed"
         }
       ]
     }
