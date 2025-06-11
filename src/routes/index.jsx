@@ -10,6 +10,7 @@ import Treino from '../pages/Treino';
 import Historico from '../pages/Historico';
 import Perfil from '../pages/Perfil';
 import EditarPerfil from '../pages/EditarPerfil';
+import NovoTreino from '../pages/NovoTreino';
 
 const AppRoutes = () => {
   return (
@@ -36,6 +37,11 @@ const AppRoutes = () => {
           <Route path="treino" element={
             <PrivateRoute>
               <Treino />
+            </PrivateRoute>
+          } />
+          <Route path="novo-treino" element={
+            <PrivateRoute>
+              <NovoTreino />
             </PrivateRoute>
           } />
           <Route path="historico" element={

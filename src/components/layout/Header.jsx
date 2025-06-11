@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import { useStorageContext } from '../../contexts/StorageContext';
-import { Button } from '../ui';
+import { FaBolt } from 'react-icons/fa';
+import { IoRefresh } from 'react-icons/io5';
 
 const HeaderContainer = styled.header`
   grid-area: header;
@@ -34,30 +35,20 @@ const Logo = styled(Link)`
   align-items: center;
   gap: 0.5rem;
 
-  &::before {
-    content: '⚡';
+  svg {
     font-size: 1.8rem;
   }
 `;
 
-const NavLinks = styled.div`
+const UserSection = styled.div`
   display: flex;
-  gap: 1rem;
   align-items: center;
-`;
-
-const NavLink = styled(Link)`
-  color: ${props => props.theme.colors.text.secondary};
-  transition: color 0.2s ease;
-
-  &:hover {
-    color: ${props => props.theme.colors.primary};
-  }
+  gap: ${props => props.theme.spacing.md};
 `;
 
 const WelcomeMessage = styled.span`
   color: ${props => props.theme.colors.text.secondary};
-  transition: color 0.2s ease;
+  font-size: ${props => props.theme.fontSizes.sm};
 `;
 
 const ResetButton = styled.button`
@@ -75,14 +66,53 @@ const ResetButton = styled.button`
   &:hover {
     opacity: 0.8;
   }
+
+  svg {
+    font-size: 1.2rem;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: ${props => props.theme.spacing.sm};
+`;
+
+const LoginButton = styled(Link)`
+  background-color: ${props => props.theme.colors.primary};
+  color: white;
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  border-radius: ${props => props.theme.borderRadius.md};
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const RegisterButton = styled(Link)`
+  background-color: transparent;
+  color: ${props => props.theme.colors.primary};
+  padding: ${props => props.theme.spacing.sm} ${props => props.theme.spacing.md};
+  border-radius: ${props => props.theme.borderRadius.md};
+  text-decoration: none;
+  font-weight: 500;
+  border: 2px solid ${props => props.theme.colors.primary};
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.primary};
+    color: white;
+  }
 `;
 
 const Header = () => {
-  const { isAuthenticated, logout } = useAuth();
-  const { data, resetData } = useStorageContext();
+  const { isAuthenticated, user } = useAuth();
+  const { resetData } = useStorageContext();
 
   const handleReset = () => {
-    if (window.confirm('Tem certeza que deseja resetar todos os dados? Esta ação não pode ser desfeita.')) {
+    if (window.confirm('Tem certeza que deseja resetar todos os dados?')) {
       resetData();
     }
   };
@@ -92,27 +122,30 @@ const Header = () => {
       <Nav>
         <NavContent>
           <Logo to="/">
+            <FaBolt />
             Fitsu
           </Logo>
-          <NavLinks>
-            <ResetButton onClick={handleReset} title="Resetar Dados">
-              🔄
-            </ResetButton>
-            {isAuthenticated() ? (
+          <UserSection>
+            {isAuthenticated ? (
               <>
                 <WelcomeMessage>
-                  Seja bem-vindo, {data?.user?.name || 'Usuário'}!
+                  {user?.name || 'Usuário'}
                 </WelcomeMessage>
+                <ResetButton onClick={handleReset} title="Resetar dados">
+                  <IoRefresh />
+                </ResetButton>
               </>
             ) : (
-              <>
-                <NavLink to="/login">Login</NavLink>
-                <Button as={Link} to="/cadastro" variant="secondary">
+              <ButtonGroup>
+                <LoginButton to="/login">
+                  Entrar
+                </LoginButton>
+                <RegisterButton to="/cadastro">
                   Cadastrar
-                </Button>
-              </>
+                </RegisterButton>
+              </ButtonGroup>
             )}
-          </NavLinks>
+          </UserSection>
         </NavContent>
       </Nav>
     </HeaderContainer>

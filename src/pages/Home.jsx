@@ -93,6 +93,52 @@ const FeatureDescription = styled.p`
 `;
 
 const Home = () => {
+  const handleSave = () => {
+    const currentDate = new Date().toISOString().split('T')[0];
+    const completedExercises = exercises.filter(ex => ex.status === 'completed');
+    const missedExercises = exercises.filter(ex => ex.status === 'missed');
+    
+    const newHistory = {
+      id: Date.now(),
+      date: currentDate,
+      status: completedExercises.length === exercises.length ? 'completed' : 
+              missedExercises.length > 0 ? 'missed' : 'pending',
+      exercises: exercises.map(ex => ({
+        id: ex.id,
+        name: ex.name,
+        sets: ex.sets,
+        reps: ex.reps,
+        weight: ex.weight,
+        status: ex.status,
+        level: ex.level
+      }))
+    };
+
+    setHistory(prev => [newHistory, ...prev]);
+    resetExercises();
+    setShowModal(false);
+  };
+
+  const handleExerciseStatusChange = (exerciseId, newStatus) => {
+    setExercises(prev => prev.map(ex => 
+      ex.id === exerciseId ? { ...ex, status: newStatus } : ex
+    ));
+  };
+
+  const handleReset = () => {
+    if (window.confirm('Tem certeza que deseja resetar todos os exercícios?')) {
+      resetExercises();
+    }
+  };
+
+  const resetExercises = () => {
+    setExercises(prev => prev.map(ex => ({
+      ...ex,
+      status: 'pending',
+      weight: ex.weight
+    })));
+  };
+
   return (
     <>
       <HeroSection>

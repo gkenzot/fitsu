@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Outlet, useLocation } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -18,13 +18,10 @@ const Main = styled.main`
   grid-area: main;
   overflow-y: auto;
   padding: ${props => props.theme.spacing.md};
-  padding-bottom: calc(${props => props.theme.spacing.md} + 80px); /* Adiciona espaço para o footer fixo */
+  padding-bottom: calc(${props => props.theme.spacing.md} + 80px); /* Espaço para o footer fixo */
 `;
 
 const BaseLayout = () => {
-  const location = useLocation();
-  console.log('Current route:', location.pathname);
-
   return (
     <LayoutContainer>
       <Header />

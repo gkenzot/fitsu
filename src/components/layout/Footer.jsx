@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import { FaChartLine, FaCalendarAlt, FaDumbbell, FaHistory, FaUser } from 'react-icons/fa';
 
 const FooterContainer = styled.footer`
   grid-area: footer;
@@ -29,7 +30,7 @@ const StyledLink = styled(Link)`
   text-decoration: none;
   color: ${props => props.$isActive ? props.theme.colors.primary : props.theme.colors.text.secondary};
   transition: color 0.2s ease;
-  padding: ${props => props.theme.spacing.xs};
+  padding: ${props => props.theme.spacing.sm};
   font-size: ${props => props.theme.fontSizes.xs};
 
   &:hover {
@@ -38,19 +39,21 @@ const StyledLink = styled(Link)`
 `;
 
 const IconWrapper = styled.div`
-  font-size: 1.5rem;
-  margin-bottom: 4px;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Footer = () => {
   const location = useLocation();
 
   const navItems = [
-    { path: '/app/dashboard', icon: '📊', label: 'Dashboard' },
-    { path: '/app/semana', icon: '📅', label: 'Semana' },
-    { path: '/app/treino', icon: '💪', label: 'Treino' },
-    { path: '/app/historico', icon: '📝', label: 'Histórico' },
-    { path: '/app/perfil', icon: '👤', label: 'Perfil' }
+    { path: '/app/dashboard', icon: <FaChartLine />, label: 'Dashboard' },
+    { path: '/app/semana', icon: <FaCalendarAlt />, label: 'Semana' },
+    { path: '/app/treino', icon: <FaDumbbell />, label: 'Treino' },
+    { path: '/app/historico', icon: <FaHistory />, label: 'Histórico' },
+    { path: '/app/perfil', icon: <FaUser />, label: 'Perfil' }
   ];
 
   return (
@@ -61,9 +64,9 @@ const Footer = () => {
             key={item.path} 
             to={item.path}
             $isActive={location.pathname === item.path}
+            title={item.label}
           >
             <IconWrapper>{item.icon}</IconWrapper>
-            {item.label}
           </StyledLink>
         ))}
       </NavContainer>

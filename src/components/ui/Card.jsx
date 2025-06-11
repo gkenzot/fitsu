@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const cardVariants = {
   default: css`
@@ -31,10 +32,10 @@ const cardSizes = {
 const CardWrapper = styled.div`
   border-radius: ${props => props.theme.borderRadius.lg};
   transition: all 0.2s ease;
-  width: ${props => props.fullWidth ? '100%' : 'auto'};
+  width: ${props => props.$fullWidth ? '100%' : 'auto'};
   
-  ${props => cardVariants[props.variant]}
-  ${props => cardSizes[props.size]}
+  ${props => cardVariants[props.$variant]}
+  ${props => cardSizes[props.$size]}
 `;
 
 const CardHeader = styled.div`
@@ -75,20 +76,34 @@ const Card = ({
   alignFooter,
   ...props
 }) => {
+  const cardId = `card-${Math.random().toString(36).substr(2, 9)}`;
+
   return (
     <CardWrapper
-      variant={variant}
-      size={size}
-      fullWidth={fullWidth}
+      $variant={variant}
+      $size={size}
+      $fullWidth={fullWidth}
+      role="article"
+      aria-labelledby={title ? `${cardId}-title` : undefined}
       {...props}
     >
       {(title || subtitle) && (
         <CardHeader>
-          {title && <CardTitle>{title}</CardTitle>}
-          {subtitle && <CardSubtitle>{subtitle}</CardSubtitle>}
+          {title && (
+            <CardTitle id={`${cardId}-title`}>
+              {title}
+            </CardTitle>
+          )}
+          {subtitle && (
+            <CardSubtitle>
+              {subtitle}
+            </CardSubtitle>
+          )}
         </CardHeader>
       )}
-      <CardContent>{children}</CardContent>
+      <CardContent>
+        {children}
+      </CardContent>
       {footer && (
         <CardFooter alignFooter={alignFooter}>
           {footer}
@@ -96,6 +111,17 @@ const Card = ({
       )}
     </CardWrapper>
   );
+};
+
+Card.propTypes = {
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
+  children: PropTypes.node.isRequired,
+  footer: PropTypes.node,
+  variant: PropTypes.oneOf(['default', 'elevated', 'outlined']),
+  size: PropTypes.oneOf(['small', 'medium', 'large']),
+  fullWidth: PropTypes.bool,
+  alignFooter: PropTypes.oneOf(['start', 'center', 'end', 'space-between', 'space-around']),
 };
 
 export default Card; 

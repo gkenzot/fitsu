@@ -155,6 +155,8 @@ const Login = () => {
           ...prev,
           form: 'Email ou senha inválidos'
         }));
+      } else {
+        navigate('/app/dashboard');
       }
     } catch (error) {
       console.error('Erro no login:', error);
@@ -170,8 +172,15 @@ const Login = () => {
   const handleTestLogin = async () => {
     setErrors({});
     try {
-      await login('user@example.com', '123456');
-      navigate('/dashboard');
+      const success = await login('user@example.com', '123456');
+      if (success !== false) {
+        navigate('/app/dashboard');
+      } else {
+        setErrors(prev => ({
+          ...prev,
+          form: 'Erro ao fazer login com usuário de teste'
+        }));
+      }
     } catch (err) {
       setErrors(prev => ({
         ...prev,
@@ -208,6 +217,7 @@ const Login = () => {
             error={errors.email}
             required
             fullWidth
+            autoComplete="username"
           />
           
           <Input
@@ -220,6 +230,7 @@ const Login = () => {
             error={errors.password}
             required
             fullWidth
+            autoComplete="current-password"
           />
 
           {errors.form && (

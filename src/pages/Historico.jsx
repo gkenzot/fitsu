@@ -40,18 +40,16 @@ const WorkoutDate = styled.div`
 `;
 
 const WorkoutStatus = styled.span`
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.875rem;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.9rem;
   background-color: ${props => {
-    switch (props.status) {
+    switch (props.$status) {
       case 'completed':
         return props.theme.colors.success;
       case 'partial':
         return props.theme.colors.warning;
       case 'missed':
-        return props.theme.colors.error;
-      case 'pending':
         return props.theme.colors.error;
       default:
         return props.theme.colors.text.secondary;
@@ -84,15 +82,48 @@ const ExerciseItem = styled.li`
 `;
 
 const ExerciseStatus = styled.span`
-  color: ${props => {
-    switch (props.status) {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  background-color: ${props => {
+    switch (props.$status) {
       case 'completed':
         return props.theme.colors.success;
       case 'partial':
         return props.theme.colors.warning;
       case 'missed':
         return props.theme.colors.error;
-      case 'pending':
+      default:
+        return props.theme.colors.text.secondary;
+    }
+  }};
+  color: white;
+`;
+
+const TagSecundary = styled.span`
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  background-color: transparent;
+  border: 1px solid ${props => {
+    switch (props.$status) {
+      case 'completed':
+        return props.theme.colors.success;
+      case 'partial':
+        return props.theme.colors.warning;
+      case 'missed':
+        return props.theme.colors.error;
+      default:
+        return props.theme.colors.text.secondary;
+    }
+  }};
+  color: ${props => {
+    switch (props.$status) {
+      case 'completed':
+        return props.theme.colors.success;
+      case 'partial':
+        return props.theme.colors.warning;
+      case 'missed':
         return props.theme.colors.error;
       default:
         return props.theme.colors.text.secondary;
@@ -167,7 +198,7 @@ const Historico = () => {
                 <WorkoutDate>
                   {format(new Date(date + 'T00:00:00'), 'dd/MM/yyyy', { locale: ptBR })} - {getDayName(date)}
                 </WorkoutDate>
-                <WorkoutStatus status={workout.status}>
+                <WorkoutStatus $status={workout.status}>
                   {getStatusText(workout.status)}
                 </WorkoutStatus>
               </WorkoutHeader>
@@ -187,9 +218,9 @@ const Historico = () => {
                     return (
                       <ExerciseItem key={exercise.exerciseId}>
                         <span>{exerciseInfo.name}</span>
-                        <ExerciseStatus status={exercise.status}>
+                        <TagSecundary $status={exercise.status}>
                           {getStatusText(exercise.status)}
-                        </ExerciseStatus>
+                        </TagSecundary>
                       </ExerciseItem>
                     );
                   })}

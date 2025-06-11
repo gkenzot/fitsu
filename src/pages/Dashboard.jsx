@@ -13,15 +13,36 @@ const Title = styled.h1`
   margin-bottom: ${props => props.theme.spacing.md};
 `;
 
+const Subtitle = styled.h2`
+  color: ${props => props.theme.colors.text.primary};
+  font-size: 1.2rem;
+  margin-bottom: ${props => props.theme.spacing.xs};
+  font-weight: 500;
+`;
+
 const StatsGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  display: flex;
+  justify-content: space-between;
   gap: ${props => props.theme.spacing.md};
+  margin-bottom: ${props => props.theme.spacing.lg};
 `;
 
 const StatCard = styled(Card)`
-  padding: ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.md};
   text-align: center;
+  flex: 1;
+  border-left: 4px solid ${props => {
+    switch (props.$status) {
+      case 'completed':
+        return props.theme.colors.success;
+      case 'partial':
+        return props.theme.colors.warning;
+      case 'missed':
+        return props.theme.colors.error;
+      default:
+        return props.theme.colors.border;
+    }
+  }};
 `;
 
 const StatValue = styled.div`
@@ -36,40 +57,26 @@ const StatLabel = styled.div`
   font-size: 0.9rem;
 `;
 
-const RecentWorkouts = styled.section`
-  margin-top: ${props => props.theme.spacing.lg};
-`;
-
-const WorkoutList = styled.div`
+const MuscleStats = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: ${props => props.theme.spacing.md};
 `;
 
-const WorkoutCard = styled(Card)`
+const MuscleCard = styled(Card)`
   padding: ${props => props.theme.spacing.md};
+  text-align: center;
 `;
 
-const WorkoutTitle = styled.h3`
+const MuscleName = styled.div`
+  font-weight: bold;
   color: ${props => props.theme.colors.text.primary};
-  margin-bottom: ${props => props.theme.spacing.sm};
+  margin-bottom: ${props => props.theme.spacing.xs};
 `;
 
-const ExerciseList = styled.ul`
-  list-style: none;
-  padding: 0;
-  margin: 0;
-`;
-
-const ExerciseItem = styled.li`
-  display: flex;
-  justify-content: space-between;
-  padding: ${props => props.theme.spacing.xs} 0;
-  border-bottom: 1px solid ${props => props.theme.colors.border};
-  
-  &:last-child {
-    border-bottom: none;
-  }
+const MuscleCount = styled.div`
+  font-size: 1.5rem;
+  color: ${props => props.theme.colors.primary};
 `;
 
 const Dashboard = () => {
@@ -82,63 +89,55 @@ const Dashboard = () => {
   // Encontrar o treino ativo
   const activeWorkout = data.workouts.find(workout => workout.status === 'active');
   
-  // Calcular estatísticas
-  const totalWorkouts = Object.keys(data.workoutHistory).length;
-  const completedWorkouts = Object.values(data.workoutHistory).filter(
-    workout => workout.status === 'completed'
-  ).length;
-  
-  const totalExercises = Object.values(data.workoutHistory).reduce(
-    (acc, workout) => acc + (workout.exercises?.length || 0),
-    0
-  );
+  // Calcular estatísticas do histórico
+  const workoutHistory = Object.values(data.workoutHistory || {});
+  const completedWorkouts = workoutHistory.filter(workout => workout.status === 'completed').length;
+  const partialWorkouts = workoutHistory.filter(workout => workout.status === 'partial').length;
+  const missedWorkouts = workoutHistory.filter(workout => workout.status === 'missed').length;
 
-  // Pegar os últimos 3 treinos do histórico
-  const recentWorkouts = Object.entries(data.workoutHistory)
-    .sort(([dateA], [dateB]) => new Date(dateB) - new Date(dateA))
-    .slice(0, 3);
+  // Calcular estatísticas por grupo muscular do treino ativo
+  const muscleStats = {};
+  if (activeWorkout) {
+    Object.values(activeWorkout.schedule).forEach(day => {
+      day.exercises?.forEach(exercise => {
+        const exerciseData = data.exercises.find(e => e.id === exercise.exerciseId.toString());
+        if (exerciseData) {
+          const muscle = exerciseData.muscle;
+          muscleStats[muscle] = (muscleStats[muscle] || 0) + 1;
+        }
+      });
+    });
+  }
 
   return (
     <DashboardContainer>
       <Title>Dashboard</Title>
       
+      <Subtitle>Frequência</Subtitle>
       <StatsGrid>
-        <StatCard>
-          <StatValue>{totalWorkouts}</StatValue>
-          <StatLabel>Total de Treinos</StatLabel>
-        </StatCard>
-        <StatCard>
+        <StatCard $status="completed">
           <StatValue>{completedWorkouts}</StatValue>
-          <StatLabel>Treinos Completos</StatLabel>
+          <StatLabel>Completos</StatLabel>
         </StatCard>
-        <StatCard>
-          <StatValue>{totalExercises}</StatValue>
-          <StatLabel>Exercícios Realizados</StatLabel>
+        <StatCard $status="partial">
+          <StatValue>{partialWorkouts}</StatValue>
+          <StatLabel>Parcial</StatLabel>
+        </StatCard>
+        <StatCard $status="missed">
+          <StatValue>{missedWorkouts}</StatValue>
+          <StatLabel>Faltados</StatLabel>
         </StatCard>
       </StatsGrid>
 
-      <RecentWorkouts>
-        <Title>Treinos Recentes</Title>
-        <WorkoutList>
-          {recentWorkouts.map(([date, workout]) => (
-            <WorkoutCard key={date}>
-              <WorkoutTitle>
-                {new Date(date).toLocaleDateString('pt-BR')} - {workout.dayOfWeek}
-              </WorkoutTitle>
-              <ExerciseList>
-                {workout.exercises?.map((exercise) => (
-                  <ExerciseItem key={exercise.exerciseId}>
-                    <span>{exercise.name}</span>
-                    <span>
-                      {exercise.sets}x{exercise.reps} - {exercise.weight}kg
-                    </span>
-                  </ExerciseItem>
-                ))}
-              </ExerciseList>
-            </WorkoutCard>
-          ))}
-        </WorkoutList>
-      </RecentWorkouts>
+      <Subtitle>{activeWorkout ? activeWorkout.name : 'Nenhum treino ativo'}</Subtitle>
+      <MuscleStats>
+        {Object.entries(muscleStats).map(([muscle, count]) => (
+          <MuscleCard key={muscle}>
+            <MuscleName>{muscle}</MuscleName>
+            <MuscleCount>{count}</MuscleCount>
+          </MuscleCard>
+        ))}
+      </MuscleStats>
     </DashboardContainer>
   );
 };

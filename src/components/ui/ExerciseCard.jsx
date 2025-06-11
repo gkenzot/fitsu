@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { useState, useEffect } from 'react';
 import Card from './Card';
 import Input from './Input';
 import Button from './Button';
-import { useState, useEffect } from 'react';
+import { Tag } from './';
 
 const ExerciseHeader = styled.div`
   display: flex;
@@ -70,23 +71,53 @@ const CheckboxLabel = styled.label`
 
 const MinimizedCard = styled(Card)`
   opacity: 0.7;
-  transition: opacity 0.2s;
-  position: relative;
+  transition: all 0.2s ease;
   cursor: pointer;
+  box-shadow: none;
+  border: 1px solid ${props => props.theme.colors.border};
+  padding: ${props => props.theme.spacing.md};
   &:hover {
     opacity: 1;
+    transform: translateY(-2px);
   }
-  ${props => props.concluded && `
+  ${props => props.$concluded && `
     border-left: 4px solid ${props.theme.colors.success};
   `}
 `;
 
 const StyledCard = styled(Card)`
-  position: relative;
-  ${props => props.concluded && `
+  transition: all 0.2s ease;
+  box-shadow: none;
+  border: 1px solid ${props => props.theme.colors.border};
+  padding: ${props => props.theme.spacing.md};
+  &:hover {
+    transform: translateY(-2px);
+  }
+  ${props => props.$concluded && `
     border-left: 4px solid ${props.theme.colors.success};
   `}
 `;
+
+const ExerciseSummary = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const MinimizedExerciseCard = ({ exercise, concluded, onClick }) => (
+  <MinimizedCard 
+    variant="elevated" 
+    size="medium" 
+    fullWidth 
+    $concluded={concluded}
+    onClick={onClick}
+  >
+    <ExerciseSummary>
+      <ExerciseName>{exercise.name}</ExerciseName>
+      <span>{exercise.sets} x {exercise.reps} {exercise.weight}kg</span>
+    </ExerciseSummary>
+  </MinimizedCard>
+);
 
 const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted, onStatusChange }) => {
   const [newWeight, setNewWeight] = useState('');
@@ -111,7 +142,7 @@ const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted, onStatusChange })
     const newConcludedState = e.target.checked;
     setConcluded(newConcludedState);
     if (onStatusChange) {
-      onStatusChange(exercise.id, newConcludedState ? 'completed' : 'pending');
+      onStatusChange(exercise.id, newConcludedState ? 'completed' : 'missed');
     }
     if (newConcludedState) {
       setMinimized(true);
@@ -132,56 +163,57 @@ const ExerciseCard = ({ exercise, onUpdateWeight, isCompleted, onStatusChange })
 
   if (minimized) {
     return (
-      <MinimizedCard 
-        variant="elevated" 
-        size="medium" 
-        fullWidth 
+      <MinimizedExerciseCard
+        exercise={exercise}
         concluded={concluded}
         onClick={handleMinimizedCardClick}
-      >
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <ExerciseName>{exercise.name}</ExerciseName>
-          <span>{exercise.sets} x {exercise.reps} {exercise.weight}kg</span>
-        </div>
-      </MinimizedCard>
+      />
     );
   }
 
   return (
-    <StyledCard variant="elevated" size="medium" fullWidth concluded={concluded}>
+    <StyledCard variant="default" size="small" fullWidth $concluded={concluded}>
       <ExerciseHeader>
         <ExerciseName onClick={handleNameClick}>{exercise.name}</ExerciseName>
         <ExerciseDetails>
           <span>{exercise.sets} séries</span>
           <span>{exercise.reps} repetições</span>
           <span>{exercise.weight}kg</span>
+          {exercise.level && (
+            <Tag variant={exercise.level} size="small">
+              {exercise.level}
+            </Tag>
+          )}
         </ExerciseDetails>
       </ExerciseHeader>
+
       <ExerciseInputRow>
         <CheckboxContainer>
           <Checkbox
             type="checkbox"
-            id={`exercise-${exercise.id}`}
             checked={concluded}
             onChange={handleConclude}
             disabled={isCompleted}
           />
-          <CheckboxLabel htmlFor={`exercise-${exercise.id}`}>
-            Concluído
-          </CheckboxLabel>
+          <CheckboxLabel>Concluído</CheckboxLabel>
         </CheckboxContainer>
+
         <RightGroup>
           <Input
             type="number"
-            placeholder="Novo peso (kg)"
             value={newWeight}
-            onChange={e => setNewWeight(e.target.value)}
+            onChange={(e) => setNewWeight(e.target.value)}
+            placeholder="Novo peso"
             size="small"
-            style={{ maxWidth: 100 }}
-            disabled={isCompleted}
+            style={{ width: '100px' }}
           />
-          <Button size="small" onClick={handleCheck} disabled={isCompleted}>
-            ✓
+          <Button
+            variant="primary"
+            size="small"
+            onClick={handleCheck}
+            disabled={!newWeight.trim()}
+          >
+            Atualizar
           </Button>
         </RightGroup>
       </ExerciseInputRow>

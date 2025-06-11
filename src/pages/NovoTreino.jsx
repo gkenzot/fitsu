@@ -1,24 +1,35 @@
 import styled from 'styled-components';
 import { useState } from 'react';
+import { Card, Modal, Button } from '../components/ui';
+import { HiPlus } from 'react-icons/hi';
+import NovoExercicioModal from '../components/NovoExercicioModal';
+import { useNavigate } from 'react-router-dom';
+import { useStorageContext } from '../contexts/StorageContext';
 
 const NovoTreinoContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.lg};
+  max-width: 1200px;
+  margin: 0 auto;
 `;
 
 const Title = styled.h1`
   color: ${props => props.theme.colors.text.primary};
   margin-bottom: ${props => props.theme.spacing.lg};
+  text-align: center;
 `;
 
-const Form = styled.form`
+const WorkoutInfo = styled.div`
   display: flex;
-  flex-direction: column;
-  gap: ${props => props.theme.spacing.md};
+  gap: ${props => props.theme.spacing.lg};
+  margin-bottom: ${props => props.theme.spacing.xl};
+  background-color: ${props => props.theme.colors.background.card};
+  padding: ${props => props.theme.spacing.lg};
+  border-radius: ${props => props.theme.borderRadius.md};
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 `;
 
-const FormGroup = styled.div`
+const InfoGroup = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   gap: ${props => props.theme.spacing.xs};
@@ -26,154 +37,374 @@ const FormGroup = styled.div`
 
 const Label = styled.label`
   color: ${props => props.theme.colors.text.secondary};
-  font-size: ${props => props.theme.fontSizes.sm};
+  font-size: 0.9rem;
+  font-weight: 500;
 `;
 
 const Input = styled.input`
-  padding: ${props => props.theme.spacing.sm};
-  border: 1px solid ${props => props.theme.colors.border};
-  border-radius: ${props => props.theme.borderRadius.md};
-  background-color: ${props => props.theme.colors.background.card};
-  color: ${props => props.theme.colors.text.primary};
-
-  &:focus {
-    outline: none;
-    border-color: ${props => props.theme.colors.primary};
-  }
-`;
-
-const Select = styled.select`
-  padding: ${props => props.theme.spacing.sm};
-  border: 1px solid ${props => props.theme.colors.border};
-  border-radius: ${props => props.theme.borderRadius.md};
-  background-color: ${props => props.theme.colors.background.card};
-  color: ${props => props.theme.colors.text.primary};
-
-  &:focus {
-    outline: none;
-    border-color: ${props => props.theme.colors.primary};
-  }
-`;
-
-const Button = styled.button`
   padding: ${props => props.theme.spacing.md};
-  background-color: ${props => props.theme.colors.primary};
-  color: white;
-  border: none;
-  border-radius: ${props => props.theme.borderRadius.md};
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.2s ease;
+  border: 1px solid ${props => props.theme.colors.border};
+  border-radius: ${props => props.theme.borderRadius.sm};
+  background-color: ${props => props.theme.colors.background.main};
+  color: ${props => props.theme.colors.text.primary};
+  font-size: 1rem;
+  transition: all 0.2s;
 
-  &:hover {
-    background-color: ${props => props.theme.colors.primaryDark};
+  &:focus {
+    outline: none;
+    border-color: ${props => props.theme.colors.primary};
+    box-shadow: 0 0 0 2px ${props => props.theme.colors.primary}20;
+  }
+`;
+
+const WeekGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: ${props => props.theme.spacing.lg};
+  margin-bottom: ${props => props.theme.spacing.xl};
+`;
+
+const DayCard = styled(Card)`
+  padding: ${props => props.theme.spacing.lg};
+`;
+
+const DayHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: ${props => props.theme.spacing.md};
+`;
+
+const DayTitle = styled.h2`
+  color: ${props => props.theme.colors.text.primary};
+  font-size: 1rem;
+  margin: 0;
+`;
+
+const DayNameInput = styled.input`
+  width: 70%;
+  padding: ${props => props.theme.spacing.sm};
+  border: 1px solid ${props => props.theme.colors.border};
+  border-radius: ${props => props.theme.borderRadius.sm};
+  background-color: ${props => props.theme.colors.background.card};
+  color: ${props => props.theme.colors.text.primary};
+
+  &:focus {
+    outline: none;
+    border-color: ${props => props.theme.colors.primary};
   }
 `;
 
 const ExerciseList = styled.div`
   display: flex;
   flex-direction: column;
-  gap: ${props => props.theme.spacing.md};
-  margin-top: ${props => props.theme.spacing.lg};
+  gap: ${props => props.theme.spacing.sm};
+  margin-bottom: ${props => props.theme.spacing.md};
 `;
 
-const ExerciseCard = styled.div`
-  background-color: ${props => props.theme.colors.background.card};
+const ExerciseCard = styled(Card)`
   padding: ${props => props.theme.spacing.md};
-  border-radius: ${props => props.theme.borderRadius.md};
+`;
+
+const ExerciseHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: ${props => props.theme.spacing.sm};
 `;
 
+const ExerciseName = styled.h3`
+  color: ${props => props.theme.colors.text.primary};
+  margin: 0;
+  font-size: 1rem;
+`;
+
+const ExerciseDetails = styled.div`
+  display: flex;
+  gap: ${props => props.theme.spacing.md};
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 0.9rem;
+`;
+
+const ExerciseNotes = styled.p`
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 0.9rem;
+  margin: ${props => props.theme.spacing.sm} 0 0;
+`;
+
+const AddExerciseButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${props => props.theme.spacing.sm};
+  width: 100%;
+  padding: ${props => props.theme.spacing.sm};
+  background-color: ${props => props.theme.colors.background.hover};
+  color: ${props => props.theme.colors.text.primary};
+  border: 1px dashed ${props => props.theme.colors.border};
+  border-radius: ${props => props.theme.borderRadius.sm};
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.background.card};
+    border-color: ${props => props.theme.colors.primary};
+  }
+`;
+
+const AddWorkoutButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: ${props => props.theme.spacing.sm};
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  padding: ${props => props.theme.spacing.md};
+  background-color: ${props => props.theme.colors.primary};
+  color: white;
+  border: none;
+  border-radius: ${props => props.theme.borderRadius.sm};
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: ${props => props.theme.colors.primaryDark};
+  }
+`;
+
+const ModalContent = styled.div`
+  padding: ${props => props.theme.spacing.lg};
+`;
+
+const diasDaSemana = [
+  { id: 'monday', name: 'Segunda-feira' },
+  { id: 'tuesday', name: 'Terça-feira' },
+  { id: 'wednesday', name: 'Quarta-feira' },
+  { id: 'thursday', name: 'Quinta-feira' },
+  { id: 'friday', name: 'Sexta-feira' },
+  { id: 'saturday', name: 'Sábado' },
+  { id: 'sunday', name: 'Domingo' }
+];
+
 const NovoTreino = () => {
-  const [exercicios, setExercicios] = useState([]);
-  const [novoExercicio, setNovoExercicio] = useState({
-    nome: '',
-    series: '',
-    repeticoes: '',
-    peso: ''
+  const navigate = useNavigate();
+  const { data, updateData } = useStorageContext();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [workoutData, setWorkoutData] = useState({
+    name: '',
+    monday: { name: '', exercises: [] },
+    tuesday: { name: '', exercises: [] },
+    wednesday: { name: '', exercises: [] },
+    thursday: { name: '', exercises: [] },
+    friday: { name: '', exercises: [] },
+    saturday: { name: '', exercises: [] },
+    sunday: { name: '', exercises: [] }
   });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setExercicios([...exercicios, novoExercicio]);
-    setNovoExercicio({ nome: '', series: '', repeticoes: '', peso: '' });
-  };
+  const [showModal, setShowModal] = useState(false);
+  const [selectedDay, setSelectedDay] = useState('');
 
-  const handleChange = (e) => {
+  const handleWorkoutInfoChange = (e) => {
     const { name, value } = e.target;
-    setNovoExercicio(prev => ({
+    setWorkoutData(prev => ({
       ...prev,
       [name]: value
     }));
   };
 
+  const handleDayNameChange = (dayId, value) => {
+    setWorkoutData(prev => ({
+      ...prev,
+      [dayId]: {
+        ...prev[dayId],
+        name: value
+      }
+    }));
+  };
+
+  const handleAddExercise = (dayId) => {
+    setSelectedDay(dayId);
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
+  const handleSubmitExercise = (dayId, exercise) => {
+    setWorkoutData(prev => ({
+      ...prev,
+      [dayId]: {
+        ...prev[dayId],
+        exercises: [...prev[dayId].exercises, exercise]
+      }
+    }));
+  };
+
+  const handleAddWorkout = () => {
+    if (!workoutData.name) {
+      alert('Por favor, insira o nome do treino.');
+      return;
+    }
+
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmAddWorkout = () => {
+    // Desativar treino atual se existir
+    const updatedWorkouts = data.workouts.map(workout => ({
+      ...workout,
+      status: 'inactive'
+    }));
+
+    // Encontrar o próximo ID disponível
+    const nextId = data.workouts.length > 0 
+      ? Math.max(...data.workouts.map(w => parseInt(w.id))) + 1 
+      : 1;
+
+    // Filtrar apenas os dias que possuem exercícios
+    const schedule = Object.entries(workoutData)
+      .filter(([key, value]) => 
+        key !== 'name' && // Excluir o campo 'name' do workoutData
+        Array.isArray(value.exercises) && 
+        value.exercises.length > 0
+      )
+      .reduce((acc, [key, value]) => ({
+        ...acc,
+        [key]: {
+          id: key === 'monday' ? 1 :
+               key === 'tuesday' ? 2 :
+               key === 'wednesday' ? 3 :
+               key === 'thursday' ? 4 :
+               key === 'friday' ? 5 :
+               key === 'saturday' ? 6 :
+               key === 'sunday' ? 7 : 1,
+          name: value.name,
+          exercises: value.exercises.map(exercise => ({
+            exerciseId: parseInt(exercise.exerciseId), // Garantindo que exerciseId seja número
+            sets: exercise.sets,
+            reps: exercise.reps,
+            weight: exercise.weight,
+            notes: exercise.notes || ''
+          }))
+        }
+      }), {});
+
+    // Criar novo treino
+    const newWorkout = {
+      id: nextId.toString(),
+      name: workoutData.name,
+      status: 'active',
+      startDate: new Date().toISOString().split('T')[0],
+      schedule
+    };
+
+    // Atualizar dados
+    updateData({
+      ...data,
+      workouts: [...updatedWorkouts, newWorkout]
+    });
+
+    // Fechar modal e navegar para página semanal
+    setShowConfirmModal(false);
+    navigate('/app/semana');
+  };
+
   return (
     <NovoTreinoContainer>
       <Title>Novo Treino</Title>
-      <Form onSubmit={handleSubmit}>
-        <FormGroup>
-          <Label>Nome do Exercício</Label>
+
+      <WorkoutInfo>
+        <InfoGroup>
+          <Label>Nome do Treino</Label>
           <Input
             type="text"
-            name="nome"
-            value={novoExercicio.nome}
-            onChange={handleChange}
-            placeholder="Ex: Supino Reto"
+            name="name"
+            value={workoutData.name}
+            onChange={handleWorkoutInfoChange}
+            placeholder="Digite o nome do treino"
             required
           />
-        </FormGroup>
+        </InfoGroup>
+      </WorkoutInfo>
 
-        <FormGroup>
-          <Label>Séries</Label>
-          <Input
-            type="number"
-            name="series"
-            value={novoExercicio.series}
-            onChange={handleChange}
-            placeholder="Ex: 4"
-            required
-          />
-        </FormGroup>
+      <WeekGrid>
+        {diasDaSemana.map(({ id, name }) => (
+          <DayCard key={id}>
+            <DayHeader>
+              <DayNameInput
+                placeholder="Nome do treino (ex: Peito e Tríceps)"
+                value={workoutData[id].name}
+                onChange={(e) => handleDayNameChange(id, e.target.value)}
+              />
+              <DayTitle>{name}</DayTitle>
+            </DayHeader>
+            
+            <ExerciseList>
+              {workoutData[id].exercises.map((exercise, index) => (
+                <ExerciseCard key={index}>
+                  <ExerciseHeader>
+                    <ExerciseName>{exercise.name}</ExerciseName>
+                  </ExerciseHeader>
+                  <ExerciseDetails>
+                    <span>{exercise.sets} séries</span>
+                    <span>{exercise.reps} repetições</span>
+                    <span>{exercise.weight}kg</span>
+                  </ExerciseDetails>
+                  {exercise.notes && (
+                    <ExerciseNotes>{exercise.notes}</ExerciseNotes>
+                  )}
+                </ExerciseCard>
+              ))}
+            </ExerciseList>
 
-        <FormGroup>
-          <Label>Repetições</Label>
-          <Input
-            type="text"
-            name="repeticoes"
-            value={novoExercicio.repeticoes}
-            onChange={handleChange}
-            placeholder="Ex: 12"
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <Label>Peso (kg)</Label>
-          <Input
-            type="text"
-            name="peso"
-            value={novoExercicio.peso}
-            onChange={handleChange}
-            placeholder="Ex: 60"
-            required
-          />
-        </FormGroup>
-
-        <Button type="submit">Adicionar Exercício</Button>
-      </Form>
-
-      <ExerciseList>
-        {exercicios.map((exercicio, index) => (
-          <ExerciseCard key={index}>
-            <div>
-              <h3>{exercicio.nome}</h3>
-              <p>{exercicio.series}x{exercicio.repeticoes} - {exercicio.peso}kg</p>
-            </div>
-          </ExerciseCard>
+            <AddExerciseButton onClick={() => handleAddExercise(id)}>
+              <HiPlus size={20} />
+              Adicionar Exercício
+            </AddExerciseButton>
+          </DayCard>
         ))}
-      </ExerciseList>
+      </WeekGrid>
+
+      <AddWorkoutButton onClick={handleAddWorkout}>
+        <HiPlus size={20} />
+        Adicionar Treino
+      </AddWorkoutButton>
+
+      <NovoExercicioModal
+        isOpen={showModal}
+        onClose={handleCloseModal}
+        onAddExercise={handleSubmitExercise}
+        selectedDay={selectedDay}
+      />
+
+      <Modal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        title="Confirmar Novo Treino"
+        footer={
+          <>
+            <Button 
+              variant="outline" 
+              onClick={() => setShowConfirmModal(false)}
+            >
+              Cancelar
+            </Button>
+            <Button 
+              onClick={handleConfirmAddWorkout}
+            >
+              Confirmar
+            </Button>
+          </>
+        }
+      >
+        <ModalContent>
+          <p>Tem certeza que deseja adicionar este treino?</p>
+          <p>O treino atual será desativado e este novo treino será definido como ativo.</p>
+        </ModalContent>
+      </Modal>
     </NovoTreinoContainer>
   );
 };

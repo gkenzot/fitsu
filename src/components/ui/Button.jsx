@@ -66,21 +66,21 @@ const StyledButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${props => props.theme.spacing.sm};
+  gap: ${props => props.theme.spacing.xs};
   border: none;
   border-radius: ${props => props.theme.borderRadius.md};
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: ${props => props.fullWidth ? '100%' : 'auto'};
+  width: ${props => props.$fullWidth ? '100%' : 'auto'};
 
   &:disabled {
     opacity: 0.6;
     cursor: not-allowed;
   }
 
-  ${props => buttonVariants[props.variant]}
-  ${props => buttonSizes[props.size]}
+  ${props => buttonVariants[props.$variant]}
+  ${props => buttonSizes[props.$size]}
 `;
 
 /**
@@ -101,9 +101,9 @@ const Button = ({
 }) => {
   return (
     <StyledButton
-      variant={variant}
-      size={size}
-      fullWidth={fullWidth}
+      $variant={variant}
+      $size={size}
+      $fullWidth={fullWidth}
       {...props}
     >
       {children}
@@ -116,6 +116,9 @@ Button.propTypes = {
   variant: PropTypes.oneOf(['primary', 'secondary', 'outline', 'text', 'danger']),
   size: PropTypes.oneOf(['small', 'medium', 'large']),
   fullWidth: PropTypes.bool,
+  onClick: PropTypes.func,
+  disabled: PropTypes.bool,
+  type: PropTypes.oneOf(['button', 'submit', 'reset']),
 };
 
 export default Button; 

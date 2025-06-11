@@ -21,7 +21,10 @@ export const AuthProvider = ({ children }) => {
     const data = getStorageData();
     
     if (data?.user?.email === email && data?.user?.password === password) {
-      const userData = { email: data.user.email };
+      const userData = { 
+        email: data.user.email,
+        name: data.user.name 
+      };
       setUser(userData);
       localStorage.setItem('fitsu_user', JSON.stringify(userData));
       navigate('/app/dashboard');
@@ -43,9 +46,7 @@ export const AuthProvider = ({ children }) => {
     navigate('/');
   };
 
-  const isAuthenticated = () => {
-    return !!user;
-  };
+  const isAuthenticated = !!user;
 
   if (loading) {
     return null; // ou um componente de loading

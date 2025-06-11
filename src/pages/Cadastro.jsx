@@ -83,6 +83,7 @@ const Cadastro = () => {
               placeholder="Seu nome completo"
               required
               fullWidth
+              autoComplete="name"
             />
             
             <Input
@@ -92,6 +93,7 @@ const Cadastro = () => {
               placeholder="Seu email"
               required
               fullWidth
+              autoComplete="email"
             />
             
             <Input
@@ -101,6 +103,7 @@ const Cadastro = () => {
               placeholder="Sua senha"
               required
               fullWidth
+              autoComplete="new-password"
             />
             
             <Input
@@ -110,6 +113,7 @@ const Cadastro = () => {
               placeholder="Confirme sua senha"
               required
               fullWidth
+              autoComplete="new-password"
             />
 
             <TermsContainer>

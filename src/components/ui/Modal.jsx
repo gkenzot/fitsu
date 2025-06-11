@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 
 const Overlay = styled.div`
@@ -22,6 +22,7 @@ const ModalContainer = styled.div`
   width: 90%;
   max-width: 500px;
   box-shadow: ${props => props.theme.shadows.lg};
+  outline: none;
 `;
 
 const ModalHeader = styled.div`
@@ -46,6 +47,8 @@ const ModalFooter = styled.div`
 `;
 
 const Modal = ({ isOpen, onClose, title, children, footer }) => {
+  const modalRef = useRef(null);
+
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') {
@@ -53,13 +56,21 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
       }
     };
 
+    const handleClickOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        onClose();
+      }
+    };
+
     if (isOpen) {
       document.addEventListener('keydown', handleEscape);
+      document.addEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'hidden';
     }
 
     return () => {
       document.removeEventListener('keydown', handleEscape);
+      document.removeEventListener('mousedown', handleClickOutside);
       document.body.style.overflow = 'unset';
     };
   }, [isOpen, onClose]);
@@ -67,17 +78,19 @@ const Modal = ({ isOpen, onClose, title, children, footer }) => {
   if (!isOpen) return null;
 
   return createPortal(
-    <Overlay onClick={onClose}>
-      <ModalContainer onClick={e => e.stopPropagation()}>
+    <Overlay role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <ModalContainer ref={modalRef} tabIndex="-1">
         <ModalHeader>
-          <ModalTitle>{title}</ModalTitle>
+          <ModalTitle id="modal-title">{title}</ModalTitle>
         </ModalHeader>
         <ModalContent>
           {children}
         </ModalContent>
-        <ModalFooter>
-          {footer}
-        </ModalFooter>
+        {footer && (
+          <ModalFooter>
+            {footer}
+          </ModalFooter>
+        )}
       </ModalContainer>
     </Overlay>,
     document.body

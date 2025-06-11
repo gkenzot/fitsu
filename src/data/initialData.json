@@ -25,7 +25,6 @@
       "name": "Treino A",
       "status": "completed",
       "startDate": "2025-06-02",
-      "endDate": "2025-06-08",
       "schedule": {
         "monday": {
           "id": 1,
@@ -199,163 +198,163 @@
       "schedule": {
         "monday": {
           "id": 1,
-          "name": "Costas e Bíceps",
-          "exercises": [
-            {
-              "exerciseId": 1,
-              "sets": 4,
-              "reps": 12,
-              "weight": 65,
-              "notes": "Aumentar peso na próxima semana"
-            },
-            {
-              "exerciseId": 4,
-              "sets": 4,
-              "reps": 12,
-              "weight": 55,
-              "notes": "Manter peso"
-            },
-            {
-              "exerciseId": 11,
-              "sets": 4,
-              "reps": 15,
-              "weight": 110,
-              "notes": "Bom progresso"
-            }
-          ]
-        },
-        "tuesday": {
-          "id": 2,
-          "name": "Pernas",
-          "exercises": [
-            {
-              "exerciseId": 10,
-              "sets": 4,
-              "reps": 12,
-              "weight": 85,
-              "notes": "Aumentar peso"
-            },
-            {
-              "exerciseId": 12,
-              "sets": 3,
-              "reps": 15,
-              "weight": 45,
-              "notes": "Manter peso"
-            },
-            {
-              "exerciseId": 13,
-              "sets": 3,
-              "reps": 15,
-              "weight": 40,
-              "notes": "Bom progresso"
-            }
-          ]
-        },
-        "wednesday": {
-          "id": 3,
-          "name": "Ombros e Tríceps",
-          "exercises": [
-            {
-              "exerciseId": 15,
-              "sets": 4,
-              "reps": 12,
-              "weight": 45,
-              "notes": "Aumentar peso"
-            },
-            {
-              "exerciseId": 14,
-              "sets": 3,
-              "reps": 15,
-              "weight": 10,
-              "notes": "Manter peso"
-            },
-            {
-              "exerciseId": 8,
-              "sets": 3,
-              "reps": 15,
-              "weight": 30,
-              "notes": "Bom progresso"
-            }
-          ]
-        },
-        "thursday": {
-          "id": 4,
-          "name": "Costas e Bíceps",
-          "exercises": [
-            {
-              "exerciseId": 5,
-              "sets": 4,
-              "reps": 12,
-              "weight": 50,
-              "notes": "Aumentar peso"
-            },
-            {
-              "exerciseId": 4,
-              "sets": 4,
-              "reps": 12,
-              "weight": 55,
-              "notes": "Manter peso"
-            },
-            {
-              "exerciseId": 6,
-              "sets": 3,
-              "reps": 12,
-              "weight": 22,
-              "notes": "Bom progresso"
-            }
-          ]
-        },
-        "friday": {
-          "id": 5,
-          "name": "Pernas",
-          "exercises": [
-            {
-              "exerciseId": 11,
-              "sets": 4,
-              "reps": 15,
-              "weight": 110,
-              "notes": "Aumentar peso"
-            },
-            {
-              "exerciseId": 12,
-              "sets": 3,
-              "reps": 15,
-              "weight": 45,
-              "notes": "Manter peso"
-            },
-            {
-              "exerciseId": 13,
-              "sets": 3,
-              "reps": 15,
-              "weight": 40,
-              "notes": "Bom progresso"
-            }
-          ]
-        },
-        "saturday": {
-          "id": 6,
           "name": "Peito e Tríceps",
           "exercises": [
             {
               "exerciseId": 2,
               "sets": 4,
-              "reps": 12,
-              "weight": 55,
-              "notes": "Aumentar peso"
+              "reps": 10,
+              "weight": 70,
+              "notes": "Foco em força máxima"
             },
             {
               "exerciseId": 3,
               "sets": 3,
+              "reps": 12,
+              "weight": 20,
+              "notes": "Controle de movimento"
+            },
+            {
+              "exerciseId": 9,
+              "sets": 4,
+              "reps": 12,
+              "weight": 25,
+              "notes": "Aumentar intensidade"
+            }
+          ]
+        },
+        "tuesday": {
+          "id": 2,
+          "name": "Ombros e Trapézio",
+          "exercises": [
+            {
+              "exerciseId": 15,
+              "sets": 4,
+              "reps": 10,
+              "weight": 50,
+              "notes": "Desenvolvimento com halteres"
+            },
+            {
+              "exerciseId": 14,
+              "sets": 4,
+              "reps": 12,
+              "weight": 15,
+              "notes": "Elevação lateral"
+            },
+            {
+              "exerciseId": 8,
+              "sets": 3,
+              "reps": 12,
+              "weight": 35,
+              "notes": "Encolhimento com barra"
+            }
+          ]
+        },
+        "wednesday": {
+          "id": 3,
+          "name": "Costas e Bíceps",
+          "exercises": [
+            {
+              "exerciseId": 1,
+              "sets": 4,
+              "reps": 8,
+              "weight": 80,
+              "notes": "Puxada frontal"
+            },
+            {
+              "exerciseId": 4,
+              "sets": 4,
+              "reps": 10,
+              "weight": 60,
+              "notes": "Rosca direta"
+            },
+            {
+              "exerciseId": 5,
+              "sets": 3,
+              "reps": 12,
+              "weight": 55,
+              "notes": "Remada baixa"
+            }
+          ]
+        },
+        "thursday": {
+          "id": 4,
+          "name": "Pernas e Glúteos",
+          "exercises": [
+            {
+              "exerciseId": 10,
+              "sets": 4,
+              "reps": 8,
+              "weight": 100,
+              "notes": "Agachamento livre"
+            },
+            {
+              "exerciseId": 11,
+              "sets": 3,
+              "reps": 12,
+              "weight": 120,
+              "notes": "Leg press"
+            },
+            {
+              "exerciseId": 12,
+              "sets": 4,
               "reps": 15,
-              "weight": 14,
-              "notes": "Manter peso"
+              "weight": 50,
+              "notes": "Extensão de pernas"
+            }
+          ]
+        },
+        "friday": {
+          "id": 5,
+          "name": "Peito e Ombros",
+          "exercises": [
+            {
+              "exerciseId": 2,
+              "sets": 4,
+              "reps": 12,
+              "weight": 65,
+              "notes": "Supino inclinado"
+            },
+            {
+              "exerciseId": 15,
+              "sets": 3,
+              "reps": 12,
+              "weight": 45,
+              "notes": "Desenvolvimento militar"
             },
             {
               "exerciseId": 9,
               "sets": 3,
               "reps": 15,
               "weight": 22,
-              "notes": "Bom progresso"
+              "notes": "Crucifixo"
+            }
+          ]
+        },
+        "saturday": {
+          "id": 6,
+          "name": "Costas e Pernas",
+          "exercises": [
+            {
+              "exerciseId": 1,
+              "sets": 4,
+              "reps": 10,
+              "weight": 75,
+              "notes": "Puxada na frente"
+            },
+            {
+              "exerciseId": 10,
+              "sets": 3,
+              "reps": 10,
+              "weight": 90,
+              "notes": "Agachamento hack"
+            },
+            {
+              "exerciseId": 13,
+              "sets": 4,
+              "reps": 12,
+              "weight": 45,
+              "notes": "Flexão de pernas"
             }
           ]
         }
@@ -459,15 +458,15 @@
       "status": "completed",
       "exercises": [
         {
-          "exerciseId": 1,
+          "exerciseId": 2,
           "status": "completed"
         },
         {
-          "exerciseId": 4,
+          "exerciseId": 3,
           "status": "completed"
         },
         {
-          "exerciseId": 11,
+          "exerciseId": 9,
           "status": "completed"
         }
       ]
@@ -476,18 +475,18 @@
       "dayId": 2,
       "workoutId": 2,
       "status": "partial",
-      "reason": "Dor no joelho",
+      "reason": "Dor no ombro",
       "exercises": [
         {
-          "exerciseId": 10,
+          "exerciseId": 15,
           "status": "completed"
         },
         {
-          "exerciseId": 12,
-          "status": "missed"
+          "exerciseId": 14,
+          "status": "completed"
         },
         {
-          "exerciseId": 13,
+          "exerciseId": 8,
           "status": "missed"
         }
       ]

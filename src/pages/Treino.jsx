@@ -15,15 +15,14 @@ const Title = styled.h1`
   color: ${props => props.theme.colors.text.primary};
   margin-bottom: ${props => props.theme.spacing.md};
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: ${props => props.theme.spacing.sm};
 `;
 
 const Subtitle = styled.h2`
   color: ${props => props.theme.colors.text.secondary};
-  font-size: 1rem;
-  margin: 0;
-  text-align: right;
+  font-size: 1.1rem;
+  margin-bottom: ${props => props.theme.spacing.lg};
 `;
 
 const DayBadge = styled.span`
@@ -43,29 +42,27 @@ const ExerciseList = styled.div`
   display: flex;
   flex-direction: column;
   gap: ${props => props.theme.spacing.md};
-  opacity: ${props => props.isCompleted ? 0.7 : 1};
-  pointer-events: ${props => props.isCompleted ? 'none' : 'auto'};
+  opacity: ${props => props.$isCompleted ? 0.7 : 1};
+  pointer-events: ${props => props.$isCompleted ? 'none' : 'auto'};
 `;
 
 const StatusBadge = styled.span`
-  display: inline-block;
-  padding: 4px 12px;
-  border-radius: 12px;
-  font-size: 0.9rem;
-  background-color: ${props => {
-    switch (props.status) {
-      case 'completed':
-        return props.theme.colors.success;
-      case 'partial':
-        return props.theme.colors.warning;
-      case 'missed':
-        return props.theme.colors.error;
-      default:
-        return props.theme.colors.text.secondary;
-    }
-  }};
+  background-color: ${props => props.theme.colors.success};
   color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
   margin-left: ${props => props.theme.spacing.sm};
+`;
+
+const RestDayMessage = styled.div`
+  text-align: center;
+  padding: ${props => props.theme.spacing.xl};
+  background-color: ${props => props.theme.colors.background.secondary};
+  border-radius: ${props => props.theme.borderRadius.md};
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 1.2rem;
+  margin-top: ${props => props.theme.spacing.xl};
 `;
 
 const ModalContent = styled.div`
@@ -257,38 +254,41 @@ const Treino = () => {
       <Title>
         <span>
           {activeWorkout.schedule[currentDay]?.name || getDayName(currentDay)}
-          {isCompleted && <StatusBadge status="completed">Completo</StatusBadge>}
+          {isCompleted && <StatusBadge $status="completed">Completo</StatusBadge>}
         </span>
-        <Subtitle>
-          {activeWorkout.name}<br />
-          {getDayName(currentDay)}
-        </Subtitle>
       </Title>
+      <Subtitle>
+        {activeWorkout.name} | {getDayName(currentDay)}
+      </Subtitle>
       
-      <ExerciseList isCompleted={isCompleted}>
-        {todayExercises.map((exercise) => (
-          <ExerciseCard
-            key={exercise.exerciseId}
-            exercise={{
-              id: exercise.exerciseId,
-              name: getExerciseName(exercise.exerciseId),
-              sets: exercise.sets,
-              reps: exercise.reps,
-              weight: exercise.weight,
-              status: exercise.status
-            }}
-            onUpdateWeight={handleUpdateWeight}
-            onStatusChange={handleExerciseStatusChange}
-            isCompleted={isCompleted}
-          />
-        ))}
-      </ExerciseList>
+      {todayExercises.length > 0 ? (
+        <ExerciseList $isCompleted={isCompleted}>
+          {todayExercises.map((exercise) => (
+            <ExerciseCard
+              key={exercise.exerciseId}
+              exercise={{
+                id: exercise.exerciseId,
+                name: getExerciseName(exercise.exerciseId),
+                sets: exercise.sets,
+                reps: exercise.reps,
+                weight: exercise.weight,
+                status: exercise.status
+              }}
+              onUpdateWeight={handleUpdateWeight}
+              onStatusChange={handleExerciseStatusChange}
+              isCompleted={isCompleted}
+            />
+          ))}
+        </ExerciseList>
+      ) : (
+        <RestDayMessage>
+          Hoje é dia de descanso! Aproveite para se recuperar e manter a consistência do seu treino.
+        </RestDayMessage>
+      )}
 
-      {!isCompleted && (
-        <Button 
-          variant="primary" 
-          size="large" 
-          fullWidth 
+      {!isCompleted && todayExercises.length > 0 && (
+        <Button
+          variant="primary"
           onClick={() => setShowConfirmModal(true)}
           style={{ marginTop: '2rem' }}
         >
@@ -299,7 +299,7 @@ const Treino = () => {
       <Modal
         isOpen={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}
-        title="Confirmar Conclusão"
+        title="Concluir Treino"
         footer={
           <>
             <Button 
@@ -317,13 +317,8 @@ const Treino = () => {
         }
       >
         <ModalContent>
-          <p>Você tem certeza que deseja concluir este treino?</p>
-          {!todayExercises.every(exercise => exercise.status === "completed") && (
-            <Alert>
-              ⚠️ Atenção: Nem todos os exercícios foram concluídos. 
-              Este treino será salvo como parcial no seu histórico.
-            </Alert>
-          )}
+          <p>Tem certeza que deseja concluir este treino?</p>
+          <p>Esta ação não pode ser desfeita.</p>
         </ModalContent>
       </Modal>
     </TreinoContainer>
