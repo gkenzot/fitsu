@@ -80,10 +80,12 @@ const IconWrapper = styled.div`
 `;
 
 const NavLabel = styled.span`
-  margin-top: ${props => props.theme.spacing.xs};
+  display: none;
 
-  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
-    margin-top: 0;
+  &.desktop-only {
+    @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+      display: block;
+    }
   }
 `;
 
@@ -109,7 +111,7 @@ const Navbar = () => {
             title={item.label}
           >
             <IconWrapper>{item.icon}</IconWrapper>
-            <NavLabel>{item.label}</NavLabel>
+            <NavLabel className="desktop-only">{item.label}</NavLabel>
           </StyledLink>
         ))}
       </NavContainer>

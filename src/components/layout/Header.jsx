@@ -12,22 +12,23 @@ const HeaderContainer = styled.header`
   position: sticky;
   top: 0;
   z-index: 100;
+  height: 64px;
 `;
 
 const Nav = styled.nav`
   max-width: 1200px;
   margin: 0 auto;
-  padding: ${props => props.theme.spacing.md};
-
-  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
-    padding: ${props => props.theme.spacing.lg};
-  }
+  height: 100%;
+  padding: 0 ${props => props.theme.spacing.md};
+  display: flex;
+  align-items: center;
 `;
 
 const NavContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 `;
 
 const Logo = styled(Link)`
@@ -111,14 +112,10 @@ const LoginButton = styled(Link)`
   text-decoration: none;
   font-weight: 500;
   transition: opacity 0.2s;
+  font-size: ${props => props.theme.fontSizes.sm};
 
   &:hover {
     opacity: 0.9;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
-    padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
-    font-size: ${props => props.theme.fontSizes.md};
   }
 `;
 
@@ -131,15 +128,11 @@ const RegisterButton = styled(Link)`
   font-weight: 500;
   border: 2px solid ${props => props.theme.colors.primary};
   transition: all 0.2s;
+  font-size: ${props => props.theme.fontSizes.sm};
 
   &:hover {
     background-color: ${props => props.theme.colors.primary};
     color: white;
-  }
-
-  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
-    padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
-    font-size: ${props => props.theme.fontSizes.md};
   }
 `;
 
