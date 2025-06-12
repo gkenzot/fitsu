@@ -42,7 +42,7 @@ const getDifficultyColor = (difficulty) => {
 };
 
 const DifficultyBadge = styled.span`
-  background-color: ${props => getDifficultyColor(props.difficulty)};
+  background-color: ${props => getDifficultyColor(props.$difficulty)};
   color: white;
   padding: 2px 6px;
   border-radius: 10px;
@@ -92,7 +92,7 @@ const ExerciseDetails = ({ exercise }) => {
           {exercise.name || 'Exercício'}
           {exercise.muscle && <Muscle>({exercise.muscle})</Muscle>}
         </ExerciseTitle>
-        <DifficultyBadge difficulty={exercise.difficulty}>
+        <DifficultyBadge $difficulty={exercise.difficulty}>
           {exercise.difficulty || 'Não definida'}
         </DifficultyBadge>
       </ExerciseHeader>

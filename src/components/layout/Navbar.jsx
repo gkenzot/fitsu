@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaChartLine, FaCalendarAlt, FaDumbbell, FaHistory, FaUser } from 'react-icons/fa';
 
-const FooterContainer = styled.footer`
+const NavbarContainer = styled.footer`
   grid-area: footer;
   background-color: ${props => props.theme.colors.background.card};
   border-top: 1px solid ${props => props.theme.colors.border};
@@ -45,7 +45,7 @@ const IconWrapper = styled.div`
   justify-content: center;
 `;
 
-const Footer = () => {
+const Navbar = () => {
   const location = useLocation();
 
   const navItems = [
@@ -57,7 +57,7 @@ const Footer = () => {
   ];
 
   return (
-    <FooterContainer>
+    <NavbarContainer>
       <NavContainer>
         {navItems.map((item) => (
           <StyledLink 
@@ -70,8 +70,8 @@ const Footer = () => {
           </StyledLink>
         ))}
       </NavContainer>
-    </FooterContainer>
+    </NavbarContainer>
   );
 };
 
-export default Footer; 
+export default Navbar; 

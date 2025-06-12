@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { useAuth } from '../../contexts/AuthContext';
 import { useStorageContext } from '../../contexts/StorageContext';
-import { FaBolt } from 'react-icons/fa';
 import { IoRefresh } from 'react-icons/io5';
+import fitsuIcon from '../../assets/FitsuIcon064.svg';
 
 const HeaderContainer = styled.header`
   grid-area: header;
@@ -35,8 +35,9 @@ const Logo = styled(Link)`
   align-items: center;
   gap: 0.5rem;
 
-  svg {
-    font-size: 1.8rem;
+  img {
+    width: 2rem;
+    height: 2rem;
   }
 `;
 
@@ -122,7 +123,7 @@ const Header = () => {
       <Nav>
         <NavContent>
           <Logo to="/">
-            <FaBolt />
+            <img src={fitsuIcon} alt="Fitsu Logo" />
             Fitsu
           </Logo>
           <UserSection>

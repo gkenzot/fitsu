@@ -245,13 +245,13 @@ const IconButton = styled.button`
 `;
 
 const diasDaSemana = [
-  { id: 'monday', name: 'Segunda-feira', emoji: '💪' },
-  { id: 'tuesday', name: 'Terça-feira', emoji: '🏋️' },
-  { id: 'wednesday', name: 'Quarta-feira', emoji: '🔥' },
-  { id: 'thursday', name: 'Quinta-feira', emoji: '💪' },
-  { id: 'friday', name: 'Sexta-feira', emoji: '🏋️' },
-  { id: 'saturday', name: 'Sábado', emoji: '🔥' },
-  { id: 'sunday', name: 'Domingo', emoji: '😴' }
+  { id: 'monday', name: 'Segunda-feira'},
+  { id: 'tuesday', name: 'Terça-feira'},
+  { id: 'wednesday', name: 'Quarta-feira'},
+  { id: 'thursday', name: 'Quinta-feira'},
+  { id: 'friday', name: 'Sexta-feira'},
+  { id: 'saturday', name: 'Sábado'},
+  { id: 'sunday', name: 'Domingo'}
 ];
 
 const Semana = () => {
@@ -372,21 +372,12 @@ const Semana = () => {
                   {isExpanded && (
                     <ExerciseList>
                       {daySchedule.exercises.map((exercise) => {
-                        console.log('Semana - Dados do exercício:', {
-                          workoutId: activeWorkout.id,
-                          dayId: daySchedule.id,
-                          exerciseId: exercise.exerciseId,
-                          exercise
-                        });
-                        
                         const completeExerciseData = getCompleteExerciseData(
                           activeWorkout.id,
                           daySchedule.id.toString(),
                           exercise.exerciseId,
                           data
                         );
-                        
-                        console.log('Semana - Dados completos do exercício:', completeExerciseData);
                         
                         if (!completeExerciseData) return null;
                         
