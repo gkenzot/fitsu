@@ -18,6 +18,10 @@ const Nav = styled.nav`
   max-width: 1200px;
   margin: 0 auto;
   padding: ${props => props.theme.spacing.md};
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    padding: ${props => props.theme.spacing.lg};
+  }
 `;
 
 const NavContent = styled.div`
@@ -39,6 +43,15 @@ const Logo = styled(Link)`
     width: 2rem;
     height: 2rem;
   }
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    font-size: 1.8rem;
+
+    img {
+      width: 2.5rem;
+      height: 2.5rem;
+    }
+  }
 `;
 
 const UserSection = styled.div`
@@ -50,6 +63,10 @@ const UserSection = styled.div`
 const WelcomeMessage = styled.span`
   color: ${props => props.theme.colors.text.secondary};
   font-size: ${props => props.theme.fontSizes.sm};
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    font-size: ${props => props.theme.fontSizes.md};
+  }
 `;
 
 const ResetButton = styled.button`
@@ -71,6 +88,14 @@ const ResetButton = styled.button`
   svg {
     font-size: 1.2rem;
   }
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    font-size: 1.4rem;
+
+    svg {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 const ButtonGroup = styled.div`
@@ -90,6 +115,11 @@ const LoginButton = styled(Link)`
   &:hover {
     opacity: 0.9;
   }
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
+    font-size: ${props => props.theme.fontSizes.md};
+  }
 `;
 
 const RegisterButton = styled(Link)`
@@ -105,6 +135,11 @@ const RegisterButton = styled(Link)`
   &:hover {
     background-color: ${props => props.theme.colors.primary};
     color: white;
+  }
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    padding: ${props => props.theme.spacing.md} ${props => props.theme.spacing.lg};
+    font-size: ${props => props.theme.fontSizes.md};
   }
 `;
 

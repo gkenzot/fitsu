@@ -2,8 +2,8 @@ import { Link, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { FaChartLine, FaCalendarAlt, FaDumbbell, FaHistory, FaUser } from 'react-icons/fa';
 
-const NavbarContainer = styled.footer`
-  grid-area: footer;
+const NavbarContainer = styled.nav`
+  grid-area: navbar;
   background-color: ${props => props.theme.colors.background.card};
   border-top: 1px solid ${props => props.theme.colors.border};
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
@@ -12,15 +12,32 @@ const NavbarContainer = styled.footer`
   left: 0;
   right: 0;
   z-index: 1000;
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    position: static;
+    border-top: none;
+    border-right: 1px solid ${props => props.theme.colors.border};
+    box-shadow: none;
+    height: 100%;
+  }
 `;
 
-const NavContainer = styled.nav`
+const NavContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
   padding: ${props => props.theme.spacing.sm} 0;
   max-width: 600px;
   margin: 0 auto;
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: ${props => props.theme.spacing.lg};
+    max-width: none;
+    gap: ${props => props.theme.spacing.md};
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -33,6 +50,19 @@ const StyledLink = styled(Link)`
   padding: ${props => props.theme.spacing.sm};
   font-size: ${props => props.theme.fontSizes.xs};
 
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    flex-direction: row;
+    width: 100%;
+    font-size: ${props => props.theme.fontSizes.md};
+    padding: ${props => props.theme.spacing.md};
+    border-radius: ${props => props.theme.borderRadius.md};
+    background-color: ${props => props.$isActive ? props.theme.colors.background.elevated : 'transparent'};
+
+    &:hover {
+      background-color: ${props => props.theme.colors.background.elevated};
+    }
+  }
+
   &:hover {
     color: ${props => props.theme.colors.primary};
   }
@@ -43,6 +73,18 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    margin-right: ${props => props.theme.spacing.md};
+  }
+`;
+
+const NavLabel = styled.span`
+  margin-top: ${props => props.theme.spacing.xs};
+
+  @media (min-width: ${props => props.theme.breakpoints.desktop}) {
+    margin-top: 0;
+  }
 `;
 
 const Navbar = () => {
@@ -67,6 +109,7 @@ const Navbar = () => {
             title={item.label}
           >
             <IconWrapper>{item.icon}</IconWrapper>
+            <NavLabel>{item.label}</NavLabel>
           </StyledLink>
         ))}
       </NavContainer>

@@ -59,9 +59,13 @@ const Input = styled.input`
 
 const WeekGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   gap: ${props => props.theme.spacing.lg};
   margin-bottom: ${props => props.theme.spacing.xl};
+
+  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const DayCard = styled(Card)`
@@ -103,27 +107,33 @@ const ExerciseList = styled.div`
 `;
 
 const ExerciseCard = styled(Card)`
-  padding: ${props => props.theme.spacing.md};
+  padding: ${props => props.theme.spacing.lg};
+  margin-bottom: ${props => props.theme.spacing.md};
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const ExerciseHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: ${props => props.theme.spacing.sm};
+  margin-bottom: ${props => props.theme.spacing.md};
 `;
 
 const ExerciseName = styled.h3`
   color: ${props => props.theme.colors.text.primary};
   margin: 0;
-  font-size: 1rem;
+  font-size: ${props => props.theme.fontSizes.lg};
 `;
 
 const ExerciseDetails = styled.div`
   display: flex;
-  gap: ${props => props.theme.spacing.md};
+  gap: ${props => props.theme.spacing.lg};
   color: ${props => props.theme.colors.text.secondary};
-  font-size: 0.9rem;
+  font-size: ${props => props.theme.fontSizes.md};
+  margin-top: ${props => props.theme.spacing.md};
 `;
 
 const ExerciseNotes = styled.p`
