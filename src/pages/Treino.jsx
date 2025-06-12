@@ -142,9 +142,6 @@ const Treino = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [workout, setWorkout] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [confirmCheckbox, setConfirmCheckbox] = useState(false);
 
   const getExerciseName = (exerciseId) => {
     const exercise = data.exercises.find(ex => ex.id === exerciseId.toString());

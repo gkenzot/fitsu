@@ -75,11 +75,4 @@ export const addWorkoutToHistory = (workout) => {
     completedAt: new Date().toISOString()
   });
   saveWorkoutHistory(history);
-};
-
-// Função para limpar todos os dados
-export const clearAllData = () => {
-  Object.values(STORAGE_KEYS).forEach(key => {
-    localStorage.removeItem(key);
-  });
 }; 

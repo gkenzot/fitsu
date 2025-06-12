@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 import { COMPONENT_VARIANTS, COMPONENT_SIZES, STATUS_VARIANTS } from '../constants/variants';
 
 export const commonProps = {
-  variant: PropTypes.oneOf(Object.values(COMPONENT_VARIANTS)),
-  size: PropTypes.oneOf(Object.values(COMPONENT_SIZES)),
+  variant: PropTypes.oneOf(COMPONENT_VARIANTS),
+  size: PropTypes.oneOf(COMPONENT_SIZES),
   fullWidth: PropTypes.bool,
   disabled: PropTypes.bool,
   children: PropTypes.node
 };
 
 export const statusProps = {
-  variant: PropTypes.oneOf(Object.values(STATUS_VARIANTS)),
+  variant: PropTypes.oneOf(STATUS_VARIANTS),
   showLabel: PropTypes.bool
 };
 

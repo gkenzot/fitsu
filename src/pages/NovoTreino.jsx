@@ -174,10 +174,6 @@ const AddWorkoutButton = styled.button`
   }
 `;
 
-const ModalContent = styled.div`
-  padding: ${props => props.theme.spacing.lg};
-`;
-
 const diasDaSemana = [
   { id: 'monday', name: 'Segunda-feira' },
   { id: 'tuesday', name: 'Terça-feira' },
@@ -400,10 +396,10 @@ const NovoTreino = () => {
           </>
         }
       >
-        <ModalContent>
+        <div>
           <p>Tem certeza que deseja adicionar este treino?</p>
           <p>O treino atual será desativado e este novo treino será definido como ativo.</p>
-        </ModalContent>
+        </div>
       </Modal>
     </NovoTreinoContainer>
   );
