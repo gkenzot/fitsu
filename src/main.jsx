@@ -19,7 +19,7 @@ const root = createRoot(rootElement)
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter basename="/fitsu">
         <GlobalStyles />
         <App />
       </BrowserRouter>
