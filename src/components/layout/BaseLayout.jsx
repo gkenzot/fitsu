@@ -29,6 +29,11 @@ const Main = styled.main`
   padding: ${props => props.theme.spacing.md};
   padding-bottom: calc(${props => props.theme.spacing.md} + 80px); /* Espaço para o footer fixo em mobile */
 
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    padding: ${props => props.theme.spacing.sm};
+    padding-bottom: calc(${props => props.theme.spacing.sm} + 80px);
+  }
+
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     padding-bottom: ${props => props.theme.spacing.md};
   }
@@ -47,6 +52,11 @@ const Footer = styled.footer`
   left: 0;
   right: 0;
   z-index: 100;
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    padding: ${props => props.theme.spacing.sm};
+    font-size: ${props => props.theme.fontSizes.xs};
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     position: static;

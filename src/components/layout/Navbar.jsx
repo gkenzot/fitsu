@@ -13,6 +13,10 @@ const NavbarContainer = styled.nav`
   right: 0;
   z-index: 1000;
 
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.1);
+  }
+
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     position: static;
     border-top: none;
@@ -29,6 +33,10 @@ const NavContainer = styled.div`
   padding: ${props => props.theme.spacing.sm} 0;
   max-width: 600px;
   margin: 0 auto;
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    padding: ${props => props.theme.spacing.xs} 0;
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     flex-direction: column;
@@ -49,6 +57,10 @@ const StyledLink = styled(Link)`
   transition: color 0.2s ease;
   padding: ${props => props.theme.spacing.sm};
   font-size: ${props => props.theme.fontSizes.xs};
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    padding: ${props => props.theme.spacing.xs};
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     flex-direction: row;
@@ -73,6 +85,10 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    font-size: 1.5rem;
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     margin-right: ${props => props.theme.spacing.md};

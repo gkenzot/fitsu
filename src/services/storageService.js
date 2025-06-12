@@ -1,4 +1,4 @@
-import initialData from '../data/initialData.json';
+import exercisesData from '../data/exercises.json';
 
 const STORAGE_KEY = 'fitsu_data';
 
@@ -6,7 +6,8 @@ export const initializeStorage = () => {
   const existingData = localStorage.getItem(STORAGE_KEY);
   
   if (!existingData) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(initialData));
+    // Inicializa apenas com os exercícios, sem dados de usuário
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ exercises: exercisesData.exercises }));
   }
 };
 
@@ -26,13 +27,13 @@ export const updateStorageData = (newData) => {
 
 export const addWorkout = (workout) => {
   const currentData = getStorageData();
-  const updatedWorkouts = [...currentData.workouts, workout];
+  const updatedWorkouts = [...(currentData.workouts || []), workout];
   updateStorageData({ ...currentData, workouts: updatedWorkouts });
 };
 
 export const updateWorkout = (workoutId, updatedWorkout) => {
   const currentData = getStorageData();
-  const updatedWorkouts = currentData.workouts.map(workout => 
+  const updatedWorkouts = (currentData.workouts || []).map(workout => 
     workout.id === workoutId ? updatedWorkout : workout
   );
   updateStorageData({ ...currentData, workouts: updatedWorkouts });
@@ -40,6 +41,6 @@ export const updateWorkout = (workoutId, updatedWorkout) => {
 
 export const deleteWorkout = (workoutId) => {
   const currentData = getStorageData();
-  const updatedWorkouts = currentData.workouts.filter(workout => workout.id !== workoutId);
+  const updatedWorkouts = (currentData.workouts || []).filter(workout => workout.id !== workoutId);
   updateStorageData({ ...currentData, workouts: updatedWorkouts });
 }; 

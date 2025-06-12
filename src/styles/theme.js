@@ -59,12 +59,14 @@ const theme = {
     full: '9999px',
   },
   breakpoints: {
+    small: '480px',
     mobile: '320px',
     tablet: '768px',
     desktop: '1024px',
     wide: '1280px',
   },
   mediaQueries: {
+    small: `@media (max-width: 479px)`,
     mobile: `@media (max-width: 767px)`,
     tablet: `@media (min-width: 768px) and (max-width: 1023px)`,
     desktop: `@media (min-width: 1024px)`,

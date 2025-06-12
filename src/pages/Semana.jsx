@@ -7,6 +7,7 @@ import { getCompleteExerciseData } from '../utils/exerciseUtils';
 import { HiOutlineClock } from 'react-icons/hi';
 import { HiPlus } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
+import { Button } from '../components/ui';
 
 const SemanaContainer = styled.div`
   display: flex;
@@ -244,6 +245,21 @@ const IconButton = styled.button`
   }
 `;
 
+const NoWorkoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.xl};
+  text-align: center;
+`;
+
+const NoWorkoutMessage = styled.p`
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 1.1rem;
+  margin-bottom: ${props => props.theme.spacing.md};
+`;
+
 const diasDaSemana = [
   { id: 'monday', name: 'Segunda-feira'},
   { id: 'tuesday', name: 'Terça-feira'},
@@ -283,7 +299,20 @@ const Semana = () => {
   if (!activeWorkout) {
     return (
       <SemanaContainer>
-        <Title>Nenhum treino ativo no momento</Title>
+        <Title>Semana</Title>
+        <NoWorkoutContainer>
+          <Subtitle>Nenhum treino ativo</Subtitle>
+          <NoWorkoutMessage>
+            Comece sua jornada fitness criando seu primeiro treino!
+          </NoWorkoutMessage>
+          <Button
+            onClick={() => navigate('/app/novo-treino')}
+            style={{ maxWidth: '300px' }}
+          >
+            <HiPlus size={20} style={{ marginRight: '8px' }} />
+            Criar Novo Treino
+          </Button>
+        </NoWorkoutContainer>
       </SemanaContainer>
     );
   }

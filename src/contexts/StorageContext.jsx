@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import initialData from '../data/initialData.json';
 import exercisesData from '../data/exercises.json';
+import initialData from '../data/initialData.json';
 
 const StorageContext = createContext();
 
@@ -21,9 +21,8 @@ export const StorageProvider = ({ children }) => {
       const parsedData = JSON.parse(storedData);
       setData({ ...parsedData, exercises: exercisesData.exercises });
     } else {
-      const initialDataWithExercises = { ...initialData, exercises: exercisesData.exercises };
-      setData(initialDataWithExercises);
-      localStorage.setItem('fitsu_data', JSON.stringify(initialDataWithExercises));
+      // Inicializa apenas com os exercícios, sem dados de usuário
+      setData({ exercises: exercisesData.exercises });
     }
   }, []);
 
@@ -34,9 +33,15 @@ export const StorageProvider = ({ children }) => {
   };
 
   const resetData = () => {
-    const initialDataWithExercises = { ...initialData, exercises: exercisesData.exercises };
-    setData(initialDataWithExercises);
-    localStorage.setItem('fitsu_data', JSON.stringify(initialDataWithExercises));
+    // Reseta para os dados iniciais, incluindo usuário de teste
+    const resetData = {
+      ...initialData,
+      exercises: exercisesData.exercises
+    };
+    setData(resetData);
+    localStorage.setItem('fitsu_data', JSON.stringify(resetData));
+    // Salva também o usuário de teste no localStorage
+    localStorage.setItem('fitsu_user', JSON.stringify(initialData.user));
   };
 
   return (

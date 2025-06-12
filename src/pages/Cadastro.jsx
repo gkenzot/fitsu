@@ -132,32 +132,37 @@ const Cadastro = () => {
         return;
       }
 
-      // Criar novo usuário
-      const newUser = {
-        id: Date.now().toString(),
-        name: formData.name,
-        email: formData.email,
-        password: formData.password,
-        height: 0,
-        weight: 0,
-        age: 0,
-        gender: '',
-        address: {
-          street: '',
-          number: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          zipCode: ''
+      // Criar nova estrutura de dados para o usuário
+      const newData = {
+        user: {
+          id: Date.now().toString(),
+          name: formData.name,
+          email: formData.email,
+          password: formData.password,
+          height: 0,
+          weight: 0,
+          age: 0,
+          gender: '',
+          address: {
+            street: '',
+            number: '',
+            neighborhood: '',
+            city: '',
+            state: '',
+            zipCode: ''
+          },
+          cpf: '',
+          phone: ''
         },
-        cpf: '',
-        phone: ''
+        workouts: [],
+        workoutHistory: []
       };
 
-      // Atualizar dados no storage
-      updateData({
-        user: newUser
-      });
+      // Limpar dados existentes e salvar nova estrutura
+      localStorage.removeItem('fitsu_user');
+      localStorage.removeItem('fitsu_data');
+      localStorage.setItem('fitsu_data', JSON.stringify(newData));
+      localStorage.setItem('fitsu_user', JSON.stringify(newData.user));
 
       // Redirecionar para o dashboard
       navigate('/app/dashboard');

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useStorageContext } from '../contexts/StorageContext';
-import { Card } from '../components/ui';
+import { Card, Button } from '../components/ui';
+import { useNavigate } from 'react-router-dom';
+import { HiPlus } from 'react-icons/hi';
 
 const DashboardContainer = styled.div`
   display: flex;
@@ -79,15 +81,31 @@ const MuscleCount = styled.div`
   color: ${props => props.theme.colors.primary};
 `;
 
+const NoWorkoutContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: ${props => props.theme.spacing.lg};
+  padding: ${props => props.theme.spacing.xl};
+  text-align: center;
+`;
+
+const NoWorkoutMessage = styled.p`
+  color: ${props => props.theme.colors.text.secondary};
+  font-size: 1.1rem;
+  margin-bottom: ${props => props.theme.spacing.md};
+`;
+
 const Dashboard = () => {
   const { data } = useStorageContext();
+  const navigate = useNavigate();
 
   if (!data) {
     return <div>Carregando...</div>;
   }
 
   // Encontrar o treino ativo
-  const activeWorkout = data.workouts.find(workout => workout.status === 'active');
+  const activeWorkout = data.workouts?.find(workout => workout.status === 'active');
   
   // Calcular estatísticas do histórico
   const workoutHistory = Object.values(data.workoutHistory || {});
@@ -107,6 +125,44 @@ const Dashboard = () => {
         }
       });
     });
+  }
+
+  if (!activeWorkout) {
+    return (
+      <DashboardContainer>
+        <Title>Dashboard</Title>
+        
+        <Subtitle>Frequência</Subtitle>
+        <StatsGrid>
+          <StatCard $status="completed">
+            <StatValue>{completedWorkouts}</StatValue>
+            <StatLabel>Completos</StatLabel>
+          </StatCard>
+          <StatCard $status="partial">
+            <StatValue>{partialWorkouts}</StatValue>
+            <StatLabel>Parcial</StatLabel>
+          </StatCard>
+          <StatCard $status="missed">
+            <StatValue>{missedWorkouts}</StatValue>
+            <StatLabel>Faltados</StatLabel>
+          </StatCard>
+        </StatsGrid>
+
+        <NoWorkoutContainer>
+          <Subtitle>Nenhum treino ativo</Subtitle>
+          <NoWorkoutMessage>
+            Comece sua jornada fitness criando seu primeiro treino!
+          </NoWorkoutMessage>
+          <Button
+            onClick={() => navigate('/app/novo-treino')}
+            style={{ maxWidth: '300px' }}
+          >
+            <HiPlus size={20} style={{ marginRight: '8px' }} />
+            Criar Novo Treino
+          </Button>
+        </NoWorkoutContainer>
+      </DashboardContainer>
+    );
   }
 
   return (
@@ -129,7 +185,7 @@ const Dashboard = () => {
         </StatCard>
       </StatsGrid>
 
-      <Subtitle>{activeWorkout ? activeWorkout.name : 'Nenhum treino ativo'}</Subtitle>
+      <Subtitle>{activeWorkout.name}</Subtitle>
       <MuscleStats>
         {Object.entries(muscleStats).map(([muscle, count]) => (
           <MuscleCard key={muscle}>

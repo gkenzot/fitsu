@@ -13,6 +13,11 @@ const HeaderContainer = styled.header`
   top: 0;
   z-index: 100;
   height: 64px;
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    height: 56px;
+    box-shadow: ${props => props.theme.shadows.sm};
+  }
 `;
 
 const Nav = styled.nav`
@@ -22,6 +27,10 @@ const Nav = styled.nav`
   padding: 0 ${props => props.theme.spacing.md};
   display: flex;
   align-items: center;
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    padding: 0 ${props => props.theme.spacing.sm};
+  }
 `;
 
 const NavContent = styled.div`
@@ -45,6 +54,16 @@ const Logo = styled(Link)`
     height: 2rem;
   }
 
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    font-size: 1.2rem;
+    gap: 0.25rem;
+
+    img {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     font-size: 1.8rem;
 
@@ -64,6 +83,10 @@ const UserSection = styled.div`
 const WelcomeMessage = styled.span`
   color: ${props => props.theme.colors.text.secondary};
   font-size: ${props => props.theme.fontSizes.sm};
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    font-size: ${props => props.theme.fontSizes.xs};
+  }
 
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
     font-size: ${props => props.theme.fontSizes.md};
@@ -88,6 +111,15 @@ const ResetButton = styled.button`
 
   svg {
     font-size: 1.2rem;
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.small}) {
+    font-size: 1rem;
+    padding: ${props => props.theme.spacing.xs};
+
+    svg {
+      font-size: 1rem;
+    }
   }
 
   @media (min-width: ${props => props.theme.breakpoints.desktop}) {
@@ -156,14 +188,9 @@ const Header = () => {
           </Logo>
           <UserSection>
             {isAuthenticated ? (
-              <>
-                <WelcomeMessage>
-                  {user?.name || 'Usuário'}
-                </WelcomeMessage>
-                <ResetButton onClick={handleReset} title="Resetar dados">
-                  <IoRefresh />
-                </ResetButton>
-              </>
+              <WelcomeMessage>
+                {user?.name || 'Usuário'}
+              </WelcomeMessage>
             ) : (
               <ButtonGroup>
                 <LoginButton to="/login">
